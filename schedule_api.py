@@ -2,6 +2,7 @@ import httplib
 import base64
 import json
 import time
+import ssl
 from app import schedule_api_consumer_key as consumer_key
 from app import schedule_api_secret_key as secret_key
 
@@ -23,7 +24,10 @@ def get_auth_token():
     Returns a tuple of (access_token, token_expiration)
     '''
     combined = base64.b64encode(consumer_key + ':' + secret_key)
-    conn = httplib.HTTPSConnection('api-km.it.umich.edu')
+    try:
+        conn = httplib.HTTPSConnection('api-km.it.umich.edu', context=ssl._create_unverified_context())
+    except:
+        conn = httplib.HTTPSConnection('api-km.it.umich.edu')
     token_head = {
         'Authorization' : 'Basic ' + combined,
         'Content-Type' : 'application/x-www-form-urlencoded'
@@ -66,6 +70,6 @@ def get_terms():
     '''
     Returns a list of valid terms.
     Each item in the list is a dictionary containing:
-        ('TermCode', 'TermDescr', 'TermShortDescr') 
+        ('TermCode', 'TermDescr', 'TermShortDescr')
     '''
     return get_data('/Curriculum/SOC/v1/Terms')['getSOCTermsResponse']['Term']
