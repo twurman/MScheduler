@@ -1,13 +1,11 @@
 from flask import render_template, request
 from app import app
-from schedule_api import get_terms
+from schedule_api import *
 
 @app.route('/')
 def index():
     options = {}
-    try:
-        options['terms'] = get_terms()
-    except:
-        options['api_error'] = True
+
+    options['terms'] = get_terms()
 
     return render_template('index.html', **options)
