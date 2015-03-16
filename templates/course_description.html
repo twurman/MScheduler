@@ -4,15 +4,34 @@
 
 <h1> Welcome to the University of Michigan Web Scheduler! </h1>
 
-<h3></h3>
+<h3>{{course_title}} {{course_num}} </h3>
+<p>{{course_description}}</p>
 
 <br><h2> Select a Section </h3>
-{% for course in catalog_numbers %}
-	<a href="/course_description/{{term}}/{{school}}/{{subject}}/{{course['CatalogNumber']}}">
-		{{subject}} {{ course['CatalogNumber'] }} ({{ course['CourseDescr'] }})
-	</a>
-    <br>
-{% endfor %}
+<table style="width:100%">
+	<tr>
+		<th>Number</th>
+		<th>Type</th>
+		<th>Instructor</th>
+		<th>Days</th>
+		<th>Time</th>
+		<th>Available Seats</th>
+		<th>Credits</th>
+	</tr>
+	{% for section in sections %}
+	<tr>
+		<td><a href="/section/{{term}}/{{school}}/{{subject}}/{{course_num}}/{{course_title}}/{{section['SectionNumber']}}">
+			{{section['SectionNumber']}} 
+		</a></td>
+		<td>{{section['SectionType']}}</td>
+		<td>{{section['ClassInstructors']['InstrName']}}</td>
+		<td>{{section['Meeting']['Days']}}</td>
+		<td>{{section['Meeting']['Times']}}</td>
+		<td>{{section['AvailableSeats']}}</td>
+		<td>{{section['CreditHours']}}</td>
+	</tr>
+	{% endfor %}
+</table>
 
 {% if api_error %}
 <b>Getting the API terms failed!</b>

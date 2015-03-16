@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1> Welcome to the University of Michigan Web Scheduler! </h1>
+
+
+
+{% if api_error %}
+<b>Getting the API terms failed!</b>
+Did you set the API token?
+{% endif %}
+
+{% endblock %}

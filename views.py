@@ -44,7 +44,7 @@ def catalog_numbers(term, school, subject):
 	return render_template('catalog_numbers.html', **options)
 
 @app.route('/course_description/<term>/<school>/<subject>/<course_num>/<course_title>')
-def course_description(term, school, subject, course_num):
+def course_description(term, school, subject, course_num, course_title):
 	
 	options = {}
 
@@ -57,4 +57,23 @@ def course_description(term, school, subject, course_num):
 	options['sections'] = get_sections(term, school, subject, course_num)
 
 	return render_template('course_description.html', **options)
+
+@app.route('/section/<term>/<school>/<subject>/<course_num>/<course_title>/<section_num>')
+def section(term, school, subject, course_num, course_title, section_num):
+	
+	options = {}
+
+	options['term'] = term
+	options['school'] = school
+	options['subject'] = subject
+	options['course_num'] = course_num
+	options['course_title'] = course_title
+	options['course_description'] = get_course_description(term, school, subject, course_num)
+	options['section'] = section_num
+	options['section_details'] = get_section_details(term, school, subject, course_num, section_num)
+	options['meetings'] = get_meetings(term, school, subject, course_num, section_num)
+	options['textbook'] = get_textbook(term, school, subject, course_num, section_num)
+	options['instructors'] = get_instructors(term, school, subject, course_num, section_num)
+
+	return render_template('section.html', **options)
 
