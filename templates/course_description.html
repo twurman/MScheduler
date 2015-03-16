@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1> Welcome to the University of Michigan Web Scheduler! </h1>
+
+<h3></h3>
+
+<br><h2> Select a Section </h3>
+{% for course in catalog_numbers %}
+	<a href="/course_description/{{term}}/{{school}}/{{subject}}/{{course['CatalogNumber']}}">
+		{{subject}} {{ course['CatalogNumber'] }} ({{ course['CourseDescr'] }})
+	</a>
+    <br>
+{% endfor %}
+
+{% if api_error %}
+<b>Getting the API terms failed!</b>
+Did you set the API token?
+{% endif %}
+
+{% endblock %}

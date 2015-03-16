@@ -4,9 +4,9 @@
 
 <h1> Welcome to the University of Michigan Web Scheduler! </h1>
 
-<br><h2> Select a Term </h3>
-{% for term in terms %}
-	<a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+<br><h2> Select a Subject </h3>
+{% for subject in subjects %}
+	<a href="/catalog_numbers/{{term}}/{{school}}/{{subject['SubjectCode']}}">{{ subject['SubjectDescr'] }}</a>
     <br>
 {% endfor %}
 
