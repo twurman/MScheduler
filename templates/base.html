@@ -4,9 +4,36 @@
     {% block head %}
     <title>WebScheduler</title>
     {% endblock %}
+
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+      <!-- lavish theme -->
+      <link rel="stylesheet" href="/static/lavish-bootstrap.css">
+
+      <style type="text/css">
+        body {
+            font-family: "Verdana", Verdana, serif;
+        }
+      </style>
+
   </head>
   <body>
-    <div id="content">{% block content %}{% endblock %}</div>
+    
+
+
+
+    <div id="content" class="col-md-12">
+      <div class="jumbotron">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
     <div id="footer">
       {% block footer %}
       {% endblock %}
