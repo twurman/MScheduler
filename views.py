@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, jsonify
 from app import app
 from schedule_api import *
 
@@ -18,7 +18,7 @@ def schools(term):
 	options['term'] = term
 	options['schools'] = get_schools(term);
 
-	return render_template('schools.html', **options)
+	return jsonify(options)
 
 @app.route('/subjects/<term>/<school>')
 def subjects(term, school):

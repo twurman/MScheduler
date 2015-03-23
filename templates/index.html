@@ -9,7 +9,7 @@
       <div class="pink"></div>
       <div class="panelContent p1"> <strong>Select A Term</strong><br></br>
         {% for term in terms %}
-			<div class="TermItem" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+			<div class="TermItem SelTerm" name="{{term['TermCode']}}" <a href="{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
 			</div>
 		    <br>
 		{% endfor %}
@@ -17,9 +17,9 @@
     </div>
     <div class="panel">
       <div class="pink dark1"></div>
-      <div class="panelContent p2"> <strong>Select School</strong><br><br/>
+      <div id="Schools" class="panelContent p2"> <strong>Select School</strong><br><br/>
         {% for term in terms %}
-			<div class="TermItem" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+			<div class="TermItem SelTerm" name="{{term['TermCode']}}" <a href="{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
 			</div>
 		    <br>
 		{% endfor %}
@@ -29,7 +29,7 @@
       <div class="pink dark2"></div>
       <div class="panelContent p3"> <strong>Select Subject</strong><br><br/>
         {% for term in terms %}
-			<div class="TermItem" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+			<div class="TermItem SelSubject" <a href="{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
 			</div>
 		    <br>
 		{% endfor %}
@@ -39,7 +39,7 @@
       <div class="pink dark3"></div>
       <div class="panelContent p4"> <strong>Select Class</strong><br><br/>
         {% for term in terms %}
-			<div class="TermItem" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+			<div class="TermItem SelClass" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
 			</div>
 		    <br>
 		{% endfor %}
@@ -63,6 +63,27 @@ $(document).ready(function(){
     	currentPanel.find('.TermItem').removeClass('active');
     	currentPanel.nextAll('.panel').find('.TermItem').removeClass('active');
     	termChoice.addClass('active');
+
+
+    	//Ajax requests
+    	if( termChoice.hasClass('SelTerm') )
+    	{
+    		var url = $SCRIPT_ROOT + "/schools/" + termChoice.attr('name');
+    		$.getJSON( url, function( jsonData ) {
+			  var items = [];
+			  $.each( jsonData, function( key, val ) {
+			    items.push( "<li id='" + key + "'>" + val + "</li>" );
+			  });
+			 
+			  $( "#Schools").append( items );
+
+			});
+
+    	}
+    	else if( termChoice.hasClass('SelSchool') )
+    	{
+
+    	}
 
         if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active') ){
 
