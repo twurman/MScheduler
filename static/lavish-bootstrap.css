@@ -5972,7 +5972,7 @@ td.visible-print {
 }
 
 .TermItem.active{
-  background-color: blue;
+  background-color: red;
   color: white;
   cursor:pointer;
 }
