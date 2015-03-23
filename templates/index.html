@@ -4,11 +4,71 @@
 
 <h1> Welcome to the University of Michigan Web Scheduler! </h1>
 
-<br><h2> Select a Term </h3>
-{% for term in terms %}
-	<a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
-    <br>
-{% endfor %}
+<div id="accordion">
+    <div class="panel">
+      <div class="pink"></div>
+      <div class="panelContent p1"> <strong>Select A Term</strong><br></br>
+        {% for term in terms %}
+			<div class="TermItem" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+			</div>
+		    <br>
+		{% endfor %}
+      </div>
+    </div>
+    <div class="panel">
+      <div class="pink dark1"></div>
+      <div class="panelContent p2"> <strong>Select School</strong><br/>
+        {% for term in terms %}
+			<div class="TermItem" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+			</div>
+		    <br>
+		{% endfor %}
+      </div>
+    </div>
+    <div class="panel">
+      <div class="pink dark2"></div>
+      <div class="panelContent p3"> <strong>Select Subject</strong><br/>
+        {% for term in terms %}
+			<div class="TermItem" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+			</div>
+		    <br>
+		{% endfor %}
+      </div>
+    </div>
+    <div class="panel FinalStage">
+      <div class="pink dark3"></div>
+      <div class="panelContent p4"> <strong>Select Class</strong><br/>
+        {% for term in terms %}
+			<div class="TermItem" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
+			</div>
+		    <br>
+		{% endfor %}
+      </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+ 
+    activePanel = $("#accordion div.panel:first");
+    $(activePanel).addClass('active');
+ 
+    $("#accordion").delegate('.TermItem', 'click', function(e){
+    	panelToActivate = $(this).parent('.panelContent').parent('.panel').nextAll('.panel:first');
+    	currentPanel = $(this).parent('.panelContent').parent('.panel');
+
+        if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active') ){
+			$(this).parent('.panelContent').parent('.panel').prevAll('.panel').animate({width: "200px"}, 300);
+			$(panelToActivate).nextAll('.panel').animate({width: "44px"}, 300);
+			$(currentPanel).animate({width: "16.33%"}, 300);
+			$(panelToActivate).animate({width: "50%"}, 300);
+			$('#accordion .panel').removeClass('active');
+			$(panelToActivate).addClass('active');
+			activePanel = $(panelToActivate);
+		 };
+    });
+});
+</script>
 
 {% if api_error %}
 <b>Getting the API terms failed!</b>
