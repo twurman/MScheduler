@@ -5970,3 +5970,10 @@ td.visible-print {
   color: white;
   cursor:pointer;
 }
+
+.TermItem.active{
+  background-color: blue;
+  color: white;
+  cursor:pointer;
+}
+

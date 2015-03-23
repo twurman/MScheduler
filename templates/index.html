@@ -52,14 +52,22 @@ $(document).ready(function(){
  
     activePanel = $("#accordion div.panel:first");
     $(activePanel).addClass('active');
+
+    termChoice = $("accordion .TermItem:first");
  
     $("#accordion").delegate('.TermItem', 'click', function(e){
     	panelToActivate = $(this).parent('.panelContent').parent('.panel').nextAll('.panel:first');
     	currentPanel = $(this).parent('.panelContent').parent('.panel');
+    	termChoice = $(this);
+
+    	currentPanel.find('.TermItem').removeClass('active');
+    	currentPanel.nextAll('.panel').find('.TermItem').removeClass('active');
+    	termChoice.addClass('active');
 
         if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active') ){
 
         	numMorePanels = $(panelToActivate).nextAll('.panel').length;
+
         	//animate all previous panels to normal width
 			$(panelToActivate).prevAll('.panel').animate({width: "16%"}, 300);
 			//animate all the rest of the panels (ones that come after) to small width
