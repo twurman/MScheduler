@@ -58,10 +58,10 @@ $(document).ready(function(){
     	currentPanel = $(this).parent('.panelContent').parent('.panel');
 
         if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active') ){
-			$(this).parent('.panelContent').parent('.panel').prevAll('.panel').animate({width: "200px"}, 300);
+			$(this).parent('.panelContent').parent('.panel').prevAll('.panel').animate({width: "16.33%"}, 300);
 			$(panelToActivate).nextAll('.panel').animate({width: "44px"}, 300);
 			$(currentPanel).animate({width: "16.33%"}, 300);
-			$(panelToActivate).animate({width: "50%"}, 300);
+			$(panelToActivate).animate({width: "51%"}, 300);
 			$('#accordion .panel').removeClass('active');
 			$(panelToActivate).addClass('active');
 			activePanel = $(panelToActivate);
