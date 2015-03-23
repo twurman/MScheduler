@@ -5914,10 +5914,10 @@ td.visible-print {
   height:100%;
   width:4%;
   overflow:hidden;
-  color:#666666;
+  color: white;
   text-decoration:none;
   font-size:16px;
-  line-height:1.5em;
+  line-height:1em;
   position: relative;
 }
 .panel.active {
@@ -5928,7 +5928,6 @@ td.visible-print {
   padding:15px 15px 15px 55px;
   height:100%;
   width:100%;
-  background-color: yellow;
 }
 
 .panelContent.p1 {
