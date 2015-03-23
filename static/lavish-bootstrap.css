@@ -5906,9 +5906,7 @@ td.visible-print {
   height:480px;
   width:100%;
   margin:0 0 0 11px;
-  border:2px solid #000000;
   overflow:hidden;
-  background-color: yellow;
 }
 .panel {
   float:left;
@@ -5933,6 +5931,20 @@ td.visible-print {
   width:100%;
   background-color: yellow;
 }
+
+.panelContent.p1 {
+  background-color: #0055bb;
+}
+.panelContent.p2 {
+  background-color: #44bbcc;
+}
+.panelContent.p3 {
+  background-color: #88dddd;
+}
+.panelContent.p4 {
+  background-color: #bbeeff;
+}
+
 .pink {
   width:42px;
   height:100%;
@@ -5953,7 +5965,6 @@ td.visible-print {
 }
 
 .TermItem{
-  background-color: yellow;
   color: black;
 }
 .TermItem:hover{
