@@ -5908,12 +5908,13 @@ td.visible-print {
   margin:0 0 0 11px;
   border:2px solid #000000;
   overflow:hidden;
+  background-color: yellow;
 }
 .panel {
   float:left;
   display:block;
   height:100%;
-  width:44px;
+  width:4%;
   overflow:hidden;
   color:#666666;
   text-decoration:none;
@@ -5923,7 +5924,7 @@ td.visible-print {
   position: relative;
 }
 .panel.active {
-  width:80%;
+  width:88%;
 }
 
 .panelContent {
@@ -5941,8 +5942,18 @@ td.visible-print {
   cursor:pointer
 }
 
+.dark1{
+  background-color: #0066CC;
+}
+.dark2{
+  background-color: #0099FF;
+}
+.dark3{
+  background-color: #99CCFF;
+}
+
 .TermItem{
-  background-color: #fff;
+  background-color: yellow;
   color: black;
 }
 .TermItem:hover{

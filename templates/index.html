@@ -58,12 +58,24 @@ $(document).ready(function(){
     	currentPanel = $(this).parent('.panelContent').parent('.panel');
 
         if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active') ){
-			$(this).parent('.panelContent').parent('.panel').prevAll('.panel').animate({width: "16.33%"}, 300);
-			$(panelToActivate).nextAll('.panel').animate({width: "44px"}, 300);
-			$(currentPanel).animate({width: "16.33%"}, 300);
-			$(panelToActivate).animate({width: "51%"}, 300);
+
+        	numMorePanels = $(panelToActivate).nextAll('.panel').length;
+        	//animate all previous panels to normal width
+			$(panelToActivate).prevAll('.panel').animate({width: "16%"}, 300);
+			//animate all the rest of the panels (ones that come after) to small width
+			$(panelToActivate).nextAll('.panel').animate({width: "4%"}, 300);
+			//animate the main panel to full size for selection
+			$(panelToActivate).animate({width: "52%"}, 300);
+
+			for(i = 0; i < numMorePanels; i++)
+			{
+				$(panelToActivate).animate({width: "+=11.66%"}, 50);
+			}
+			//no longer active
 			$('#accordion .panel').removeClass('active');
+			//set active to the selection
 			$(panelToActivate).addClass('active');
+			//(Depricated)
 			activePanel = $(panelToActivate);
 		 };
     });
