@@ -10,42 +10,9 @@ def index():
 
     return render_template('index.html', **options)
 
-@app.route('/schools/<term>')
-def schools(term):
-	
-	options = {}
-
-	options['term'] = term
-	options['schools'] = get_schools(term);
-
-	return jsonify(options)
-
-@app.route('/subjects/<term>/<school>')
-def subjects(term, school):
-	
-	options = {}
-
-	options['term'] = term
-	options['school'] = school
-	options['subjects'] = get_subjects(term, school)
-
-	return render_template('subjects.html', **options)
-
-@app.route('/catalog_numbers/<term>/<school>/<subject>')
-def catalog_numbers(term, school, subject):
-	
-	options = {}
-
-	options['term'] = term
-	options['school'] = school
-	options['subject'] = subject
-	options['catalog_numbers'] = get_catalog_numbers(term, school, subject)
-
-	return render_template('catalog_numbers.html', **options)
-
 @app.route('/course_description/<term>/<school>/<subject>/<course_num>/<course_title>')
 def course_description(term, school, subject, course_num, course_title):
-	
+
 	options = {}
 
 	options['term'] = term
@@ -60,7 +27,7 @@ def course_description(term, school, subject, course_num, course_title):
 
 @app.route('/section/<term>/<school>/<subject>/<course_num>/<course_title>/<section_num>')
 def section(term, school, subject, course_num, course_title, section_num):
-	
+
 	options = {}
 
 	options['term'] = term
