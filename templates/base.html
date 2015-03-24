@@ -20,6 +20,110 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
       <style type="text/css">
+        #accordion {
+          list-style:none;
+          margin:30px 0;
+          padding:0;
+          height:480px;
+          width:100%;
+          margin:0 0 0 11px;
+          overflow:hidden;
+        }
+        .panel {
+          float:left;
+          display:block;
+          height:100%;
+          width:4%;
+          overflow:hidden;
+          color: white;
+          text-decoration:none;
+          font-size:16px;
+          line-height:0.85em;
+          position: relative;
+        }
+        .panel.active {
+          width:88%;
+        }
+
+        .panelContent {
+          padding:15px 15px 15px 15px;
+          height:100%;
+          width:calc(100%-20px);
+          /*overflow-x: hidden;
+          overflow-y: auto; */
+        }
+
+        .TermHolder {
+          padding-left: 15px;
+          padding-bottom: 80px;
+          margin-top: -15px;
+          height:100%;
+          width:calc(100%-20px);
+          overflow-x: hidden;
+          overflow-y: auto;
+          vertical-align: text-bottom;
+          /*-ms-overflow-style: none;
+          overflow: -moz-scrollbars-none; */
+        }
+
+        .SelHeader {
+          padding-left: 20px;
+          padding-bottom: 12px;
+          border-bottom: 2px white solid;
+        }
+
+        .panelContent.p1 {
+          background-color: #2D2D36;
+        }
+        .panelContent.p2 {
+          background-color: #2D2D36;
+        }
+        .panelContent.p3 {
+          background-color: #2D2D36;
+        }
+        .panelContent.p4 {
+          background-color: #2D2D36;
+        }
+
+        .pink {
+          width:20px;
+          height:100%;
+          float:left;
+          background-color: #2D2D36;
+          /*border-right:2px solid #ffffff;*/
+        }
+
+        .dark1{
+          background-color: #2D2D36;
+        }
+        .dark2{
+          background-color: #2D2D36;
+        }
+        .dark3{
+          background-color: #2D2D36;
+        }
+
+        .TermItem{
+          padding-top: 1px;
+          padding-bottom: 1px;
+          color: #C67707;
+/*          display: flex;
+          align-items: center;*/
+          /*border-bottom: 0px solid gray;*/
+          /*line-height: 100%;*/
+        }
+        .TermItem:hover{
+          /*background-color: blue;*/
+          color: white;
+          cursor:pointer;
+        }
+        .TermItem.active{
+          /*background-color: red;*/
+          color: #A60000;
+          cursor:pointer;
+        }
+
+        /*::-webkit-scrollbar { width: 0 !important }*/
         body {
             font-family: "Verdana", Verdana, serif;
         }
@@ -35,10 +139,8 @@
 
 
 
-    <div id="content" class="col-md-12">
-      <div class="jumbotron">
+    <div id="content" class="col-md-10 col-md-offset-1">
         {% block content %}{% endblock %}
-      </div>
     </div>
     <div id="footer">
       {% block footer %}

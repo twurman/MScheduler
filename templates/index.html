@@ -2,7 +2,8 @@
 
 {% block content %}
 
-<h1> Welcome to the University of Michigan Web Scheduler! </h1>
+<h1 style="text-align: center"> Welcome to the University of Michigan Web Scheduler! </h1>
+<br><br>
 
 <div id="accordion">
     <div class="panel">
@@ -20,21 +21,21 @@
     <div class="panel">
       <div class="pink dark1"></div>
       <div id="Schools" class="panelContent p2">
-      		<div id="SchoolHeader" class="SelHeader"><strong> Select School </strong></div><br><br/>
+      		<div id="SchoolHeader" class="SelHeader"><!-- <strong> Select School </strong> --></div><br><br/>
       		<div id="SchoolHolder" class="TermHolder"></div>
       </div>
     </div>
     <div class="panel">
       <div class="pink dark2"></div>
       <div id="Subjects" class="panelContent p3">
-      		<div id="SubjectHeader" class="SelHeader"><strong> Select Subject </strong></div><br><br/>
+      		<div id="SubjectHeader" class="SelHeader"><!-- <strong> Select Subject </strong> --></div><br><br/>
       		<div id="SubjectHolder" class="TermHolder"></div>
       </div>
     </div>
     <div class="panel FinalStage">
       <div class="pink dark3"></div>
       <div id="Classes" class="panelContent p4">
-      		<div id="ClassHeader" class="SelHeader"><strong> Select Class </strong></div><br><br/>
+      		<div id="ClassHeader" class="SelHeader"><!-- <strong> Select Class </strong> --></div><br><br/>
       		<div id="ClassHolder" class="TermHolder"></div>
       </div>
     </div>
@@ -65,6 +66,9 @@ $(document).ready(function(){
         //Ajax requests
         if( termChoice.hasClass('SelTerm') )
         {
+            $( "#SchoolHeader").empty();
+            $( "#SchoolHeader").append("<strong> Select School </strong>");
+
         	termCode = termChoice.attr('name');
         	$( "#SchoolHolder").empty();
             var url = "{{ config['api_url'] }}/get_schools?term_code=" + termChoice.attr('name');
@@ -82,6 +86,9 @@ $(document).ready(function(){
         }
         else if( termChoice.hasClass('SelSchool') )
         {
+            $( "#SubjectHeader").empty();
+            $( "#SubjectHeader").append("<strong> Select Subject </strong>");
+
         	schoolCode = termChoice.attr('name');
         	$( "#SubjectHolder").empty();
         	var url = "{{ config['api_url'] }}/get_subjects?term_code=" + termCode + "&school=" + schoolCode;
@@ -89,7 +96,7 @@ $(document).ready(function(){
                 var items = [];
                 $.each( jsonData, function( key, obj ) {
                     //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
-                    items.push( "<div class='TermItem SelSubject' name='" + obj.SubjectCode + "' <p> (" + obj.SubjectShortDescr + ")" + obj.SubjectDescr + " </p></div>"  );
+                    items.push( "<div class='TermItem SelSubject' name='" + obj.SubjectCode + "' <p> (" + obj.SubjectShortDescr + ") " + obj.SubjectDescr + " </p></div>"  );
                 });
 
                 $( "#SubjectHolder").append( items );
@@ -98,6 +105,9 @@ $(document).ready(function(){
         }
         else if( termChoice.hasClass('SelSubject') )
         {
+            $( "#ClassHeader").empty();
+            $( "#ClassHeader").append("<strong> Select Class </strong>");
+
         	subjectCode = termChoice.attr('name');
         	$( "#ClassHolder").empty();
         	var url = "{{ config['api_url'] }}/get_catalog_numbers?term_code=" + termCode + "&school=" + schoolCode + "&subject=" + subjectCode;
@@ -105,7 +115,7 @@ $(document).ready(function(){
                 var items = [];
                 $.each( jsonData, function( key, obj ) {
                     //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
-                    items.push( "<div class='TermItem SelClass' name='" + obj.CatalogNumber + "' <p> (" + obj.CatalogNumber + ")" + obj.CourseDescr + " </p></div>"  );
+                    items.push( "<div class='TermItem SelClass' name='" + obj.CatalogNumber + "' <p> (" + obj.CatalogNumber + ") " + obj.CourseDescr + " </p></div>"  );
                 });
 
                 $( "#ClassHolder").append( items );
