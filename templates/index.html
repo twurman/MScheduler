@@ -132,11 +132,11 @@ $(document).ready(function(){
             numMorePanels = $(panelToActivate).nextAll('.panel').length;
 
             //animate all previous panels to normal width
-            $(panelToActivate).prevAll('.panel').animate({width: "16%"}, 300);
+            $(panelToActivate).prevAll('.panel').animate({width: "19%"}, 300);
             //animate all the rest of the panels (ones that come after) to small width
-            $(panelToActivate).nextAll('.panel').animate({width: "4%"}, 300);
+            $(panelToActivate).nextAll('.panel').animate({width: "7%"}, 300);
             //animate the main panel to full size for selection
-            $(panelToActivate).animate({width: "52%"}, 300);
+            $(panelToActivate).animate({width: "43%"}, 300);
 
             for(i = 0; i < numMorePanels; i++)
             {
