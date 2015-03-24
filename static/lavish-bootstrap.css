@@ -5928,11 +5928,26 @@ td.visible-print {
   padding:15px 15px 15px 15px;
   height:100%;
   width:calc(100%-20px);
+  /*overflow-x: hidden;
+  overflow-y: auto; */
+
+  
+}
+
+.TermHolder {
+  padding:0px 0px 0px 15px;
+  height:100%;
+  width:calc(100%-20px);
   overflow-x: hidden;
   overflow-y: auto; 
-  
-  -ms-overflow-style: none;
-  overflow: -moz-scrollbars-none; 
+  /*-ms-overflow-style: none;
+  overflow: -moz-scrollbars-none; */
+}
+
+.SelHeader {
+  padding-left: 44px;
+  padding-bottom: 12px;
+  border-bottom: 2px white solid;
 }
 
 .panelContent.p1 {
@@ -5982,5 +5997,5 @@ td.visible-print {
 }
 
 
-::-webkit-scrollbar { width: 0 !important }
+/*::-webkit-scrollbar { width: 0 !important }*/
 
