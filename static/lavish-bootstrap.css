@@ -5925,10 +5925,14 @@ td.visible-print {
 }
 
 .panelContent {
-  padding:15px 15px 15px 20px;
+  padding:15px 15px 15px 15px;
   height:100%;
   width:calc(100%-20px);
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: auto; 
+  
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none; 
 }
 
 .panelContent.p1 {
@@ -5976,4 +5980,7 @@ td.visible-print {
   color: white;
   cursor:pointer;
 }
+
+
+::-webkit-scrollbar { width: 0 !important }
 
