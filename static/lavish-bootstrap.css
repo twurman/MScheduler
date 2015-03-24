@@ -5935,7 +5935,8 @@ td.visible-print {
 }
 
 .TermHolder {
-  padding:0px 0px 0px 15px;
+  padding-left: 15px;
+  padding-bottom: 80px;
   height:100%;
   width:calc(100%-20px);
   overflow-x: hidden;
