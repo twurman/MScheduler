@@ -5937,6 +5937,7 @@ td.visible-print {
 .TermHolder {
   padding-left: 15px;
   padding-bottom: 80px;
+  margin-top: -15px;
   height:100%;
   width:calc(100%-20px);
   overflow-x: hidden;
@@ -5984,6 +5985,7 @@ td.visible-print {
 
 .TermItem{
   color: black;
+  border-bottom: 2px solid black;
 }
 .TermItem:hover{
   background-color: blue;
@@ -5995,6 +5997,9 @@ td.visible-print {
   background-color: red;
   color: white;
   cursor:pointer;
+}
+.TermItem p{
+  vertical-align: middle;
 }
 
 
