@@ -97,7 +97,7 @@ $(document).ready(function(){
                 var items = [];
                 $.each( jsonData, function( key, obj ) {
                     //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
-                    items.push( "<div class='TermItem SelSubject' name='" + obj.CatalogNumber + "' <p> (" + obj.CatalogNumber + ")" + obj.CourseDescr + " </p></div>"  );
+                    items.push( "<div class='TermItem SelClass' name='" + obj.CatalogNumber + "' <p> (" + obj.CatalogNumber + ")" + obj.CourseDescr + " </p></div>"  );
                 });
 
                 $( "#Classes").append("<strong> Select Subject </strong><br><br/>");
