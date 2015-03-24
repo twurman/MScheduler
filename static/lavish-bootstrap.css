@@ -5942,6 +5942,7 @@ td.visible-print {
   width:calc(100%-20px);
   overflow-x: hidden;
   overflow-y: auto; 
+  vertical-align: text-bottom;
   /*-ms-overflow-style: none;
   overflow: -moz-scrollbars-none; */
 }
@@ -5984,8 +5985,12 @@ td.visible-print {
 }
 
 .TermItem{
+  padding-top: 5px;
   color: black;
-  border-bottom: 2px solid black;
+  display: flex;
+  align-items; center;
+  border-bottom: 1px solid gray;
+  /*line-height: 100%;*/
 }
 .TermItem:hover{
   background-color: blue;
@@ -5998,9 +6003,7 @@ td.visible-print {
   color: white;
   cursor:pointer;
 }
-.TermItem p{
-  vertical-align: middle;
-}
+
 
 
 /*::-webkit-scrollbar { width: 0 !important }*/
