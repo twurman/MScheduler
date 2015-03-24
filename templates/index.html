@@ -18,31 +18,16 @@
     <div class="panel">
       <div class="pink dark1"></div>
       <div id="Schools" class="panelContent p2"> <strong>Select School</strong><br><br/>
-        {% for term in terms %}
-            <div class="TermItem SelTerm" name="{{term['TermCode']}}" <a href="{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
-            </div>
-            <br>
-        {% endfor %}
       </div>
     </div>
     <div class="panel">
       <div class="pink dark2"></div>
-      <div class="panelContent p3"> <strong>Select Subject</strong><br><br/>
-        {% for term in terms %}
-            <div class="TermItem SelSubject" <a href="{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
-            </div>
-            <br>
-        {% endfor %}
+      <div id="Subjects" class="panelContent p3"> <strong>Select Subject</strong><br><br/>
       </div>
     </div>
     <div class="panel FinalStage">
       <div class="pink dark3"></div>
-      <div class="panelContent p4"> <strong>Select Class</strong><br><br/>
-        {% for term in terms %}
-            <div class="TermItem SelClass" <a href="/schools/{{term['TermCode']}}">{{ term['TermDescr'] }}</a>
-            </div>
-            <br>
-        {% endfor %}
+      <div id="Classes" class="panelContent p4"> <strong>Select Class</strong><br><br/>
       </div>
     </div>
 </div>
@@ -54,6 +39,9 @@ $(document).ready(function(){
     $(activePanel).addClass('active');
 
     termChoice = $("accordion .TermItem:first");
+    termCode = 0;
+    schoolCode = 0;
+    subjectCode = 0;
 
     $("#accordion").delegate('.TermItem', 'click', function(e){
         panelToActivate = $(this).parent('.panelContent').parent('.panel').nextAll('.panel:first');
@@ -68,19 +56,53 @@ $(document).ready(function(){
         //Ajax requests
         if( termChoice.hasClass('SelTerm') )
         {
+        	termCode = termChoice.attr('name');
+        	$( "#Schools").empty();
             var url = "{{ config['api_url'] }}/get_schools?term_code=" + termChoice.attr('name');
             $.getJSON( url, function( jsonData ) {
                 var items = [];
                 $.each( jsonData, function( key, obj ) {
-                    items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
+                    //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
+                    items.push( "<div class='TermItem SelSchool' name='" + obj.SchoolCode + "' <p>" + obj.SchoolDescr + " </p></div>"  );
                 });
+
+                $( "#Schools").append("<strong> Select School </strong><br><br/>");
                 $( "#Schools").append( items );
             });
 
         }
         else if( termChoice.hasClass('SelSchool') )
         {
+        	schoolCode = termChoice.attr('name');
+        	$( "#Subjects").empty();
+        	var url = "{{ config['api_url'] }}/get_subjects?term_code=" + termCode + "&school=" + schoolCode;
+            $.getJSON( url, function( jsonData ) {
+                var items = [];
+                $.each( jsonData, function( key, obj ) {
+                    //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
+                    items.push( "<div class='TermItem SelSubject' name='" + obj.SubjectCode + "' <p> (" + obj.SubjectShortDescr + ")" + obj.SubjectDescr + " </p></div>"  );
+                });
 
+                $( "#Subjects").append("<strong> Select Subject </strong><br><br/>");
+                $( "#Subjects").append( items );
+            });
+
+        }
+        else if( termChoice.hasClass('SelSubject') )
+        {
+        	subjectCode = termChoice.attr('name');
+        	$( "#Classes").empty();
+        	var url = "{{ config['api_url'] }}/get_catalog_numbers?term_code=" + termCode + "&school=" + schoolCode + "&subject=" + subjectCode;
+            $.getJSON( url, function( jsonData ) {
+                var items = [];
+                $.each( jsonData, function( key, obj ) {
+                    //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
+                    items.push( "<div class='TermItem SelSubject' name='" + obj.CatalogNumber + "' <p> (" + obj.CatalogNumber + ")" + obj.CourseDescr + " </p></div>"  );
+                });
+
+                $( "#Classes").append("<strong> Select Subject </strong><br><br/>");
+                $( "#Classes").append( items );
+            });
         }
 
         if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active') ){
