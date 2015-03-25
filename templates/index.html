@@ -141,7 +141,8 @@ $(document).ready(function(){
             if ( $(panelToActivate).hasClass('FinalStage') )
             {
             	//animate all previous panels to normal width
-	            $(panelToActivate).prevAll('.panel').animate({width: "21.5%"}, 300);
+	            $(panelToActivate).prevAll('.panel').animate({width: "19%"}, 300);
+	            $(panelToActivate).prev('.panel').animate({width: "27%"}, 120);
 
 	            //animate the main panel to full size for selection
 	            $(panelToActivate).animate({width: "14%"}, 300);
@@ -151,6 +152,7 @@ $(document).ready(function(){
 
 	            //animate all previous panels to normal width
 	            $(panelToActivate).prevAll('.panel').animate({width: "19%"}, 300);
+
 
 	            //animate all the rest of the panels (ones that come after) to small width
 	            $(panelToActivate).nextAll('.panel').animate({width: "3%"}, 300);
