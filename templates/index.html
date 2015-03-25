@@ -133,6 +133,7 @@ $(document).ready(function(){
 
             //animate all previous panels to normal width
             $(panelToActivate).prevAll('.panel').animate({width: "19%"}, 300);
+
             //animate all the rest of the panels (ones that come after) to small width
             $(panelToActivate).nextAll('.panel').animate({width: "3%"}, 300);
             //animate the main panel to full size for selection
