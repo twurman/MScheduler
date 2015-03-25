@@ -32,11 +32,18 @@
       		<div id="SubjectHolder" class="TermHolder"></div>
       </div>
     </div>
-    <div class="panel FinalStage">
+    <div class="panel">
       <div class="pink dark3"></div>
       <div id="Classes" class="panelContent p4">
       		<div id="ClassHeader" class="SelHeader"><!-- <strong> Select Class </strong> --></div><br><br/>
       		<div id="ClassHolder" class="TermHolder"></div>
+      </div>
+    </div>
+    <div class="panel FinalStage">
+      <div class="pink dark4"></div>
+      <div id="ButtonHolder" class="panelContent p5">
+      	<button class="btn ui-corner-all"> View Info </button><br><br/> 
+		<button class="btn ui-corner-all"> Add Class </button>
       </div>
     </div>
 </div>
@@ -127,22 +134,34 @@ $(document).ready(function(){
             });
         }
 
-        if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active') ){
+        if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active')    ){
 
             numMorePanels = $(panelToActivate).nextAll('.panel').length;
 
-            //animate all previous panels to normal width
-            $(panelToActivate).prevAll('.panel').animate({width: "19%"}, 300);
-
-            //animate all the rest of the panels (ones that come after) to small width
-            $(panelToActivate).nextAll('.panel').animate({width: "3%"}, 300);
-            //animate the main panel to full size for selection
-            $(panelToActivate).animate({width: "43%"}, 300);
-
-            for(i = 0; i < numMorePanels; i++)
+            if ( $(panelToActivate).hasClass('FinalStage') )
             {
-                $(panelToActivate).animate({width: "+=11.66%"}, 120);
+            	//animate all previous panels to normal width
+	            $(panelToActivate).prevAll('.panel').animate({width: "21.5%"}, 300);
+
+	            //animate the main panel to full size for selection
+	            $(panelToActivate).animate({width: "14%"}, 300);
             }
+            else
+            {
+
+	            //animate all previous panels to normal width
+	            $(panelToActivate).prevAll('.panel').animate({width: "19%"}, 300);
+
+	            //animate all the rest of the panels (ones that come after) to small width
+	            $(panelToActivate).nextAll('.panel').animate({width: "3%"}, 300);
+	            //animate the main panel to full size for selection
+	            $(panelToActivate).animate({width: "24%"}, 300);
+
+	            for(i = 0; i < numMorePanels; i++)
+	            {
+	                $(panelToActivate).animate({width: "+=11.66%"}, 120);
+	            }
+	        }
             //no longer active
             $('#accordion .panel').removeClass('active');
             //set active to the selection
