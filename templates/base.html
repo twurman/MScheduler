@@ -109,7 +109,14 @@
           width:20px;
           height:100%;
           float:left;
-          background-color: #2D2D36;
+          background: #41435b; /* Old browsers */
+          background: -moz-linear-gradient(top,  #41435b 0%, #24323d 100%); /* FF3.6+ */
+          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#41435b), color-stop(100%,#24323d)); /* Chrome,Safari4+ */
+          background: -webkit-linear-gradient(top,  #41435b 0%,#24323d 100%); /* Chrome10+,Safari5.1+ */
+          background: -o-linear-gradient(top,  #41435b 0%,#24323d 100%); /* Opera 11.10+ */
+          background: -ms-linear-gradient(top,  #41435b 0%,#24323d 100%); /* IE10+ */
+          background: linear-gradient(to bottom,  #41435b 0%,#24323d 100%); /* W3C */
+          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#41435b', endColorstr='#24323d',GradientType=0 ); /* IE6-9 */
           /*border-right:2px solid #ffffff;*/
         }
 
@@ -134,7 +141,7 @@
         }
         .TermItem:hover{
           /*background-color: blue;*/
-          color: #E50000;
+          color: #3498db;
           cursor:pointer;
         }
         .TermItem.active{
