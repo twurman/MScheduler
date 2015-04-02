@@ -134,13 +134,9 @@ $(document).ready(function(){
             });
         }
 
-        if( !termChoice.hasClass('SelClass') )
+        $( "#ButtonHolder").empty();
+        if( termChoice.hasClass('SelClass') )
         {
-            $( "#ButtonHolder").empty();
-        }
-        else
-        {
-            $( "#ButtonHolder").empty();
             $( "#ButtonHolder").append( "<button class='btn ui-corner-all'> View Info </button><br><br/> <button class='btn ui-corner-all'> Add Class </button>") ;
         }
 
