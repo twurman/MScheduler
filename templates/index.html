@@ -47,8 +47,76 @@
     </div>
 </div>
 
+<div id='calendar1' class="calendar"></div>
+<div id='calendar2' class="calendar"></div>
+
 <script>
 $(document).ready(function(){
+
+  var date = new Date();
+  var d = date.getDate();
+  var m = date.getMonth();
+  var y = date.getFullYear();
+
+  var calendar = $('#calendar1').fullCalendar(
+  {
+    header:false,
+    defaultView: 'agendaWeek',
+    selectable: false,
+    selectHelper: false,
+    editable: false,
+    allDaySlot:false,
+    columnFormat: 'ddd',
+    minTime: "08:00:00",
+    maxTime: "19:00:00",
+    height: "auto",
+    events:[{
+            title: 'All Day Event',
+            start: new Date(y, m, 1)
+          },
+          {
+            title: 'Long Event',
+            start: new Date(y, m, d-5),
+            end: new Date(y, m, d-2)
+          },
+          {
+            id: 999,
+            title: 'Repeating Event',
+            start: new Date(y, m, d-3, 16, 0),
+            allDay: false
+          },
+          {
+            id: 999,
+            title: 'Repeating Event',
+            start: new Date(y, m, d+4, 16, 0),
+            allDay: false
+          },
+          {
+            title: 'Meeting',
+            start: new Date(y, m, d, 10, 30),
+            allDay: false
+          },
+          {
+            title: 'Lunch',
+            start: new Date(y, m, d, 12, 0),
+            end: new Date(y, m, d, 14, 0),
+            allDay: false
+          }]
+  });
+  var calendar2 = $('#calendar2').fullCalendar(
+  {
+    header: false,
+    defaultView: 'agendaWeek',
+    selectable: false,
+    selectHelper: false,
+    editable: false,
+    allDaySlot:false,
+    allDaySlot:false,
+    columnFormat: 'ddd',
+    minTime: "08:00:00",
+    maxTime: "19:00:00",
+    events:[]
+  });
 
     activePanel = $("#accordion div.panel:first");
     $(activePanel).addClass('active');

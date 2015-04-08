@@ -19,6 +19,11 @@
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
+      <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+      <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+      <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+      <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
       <style type="text/css">
 
         #content{
@@ -186,6 +191,19 @@
           background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
           background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
           text-decoration: none;
+        }
+
+        .calendar
+        {
+          float: left;
+          margin-left: 44px;
+          width:calc(50% - 44px);
+          background-color: white;
+        }
+
+        #content .eo-fullcalendar tr td
+        {
+          padding:50px;
         }
 
         ::-webkit-scrollbar { width: 0 !important }
