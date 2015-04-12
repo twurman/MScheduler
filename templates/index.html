@@ -208,12 +208,13 @@ $(document).ready(function(){
         if( termChoice.hasClass('SelClass') )
         {
             courseCode = termChoice.attr('name');
-            $( "#ButtonHolder").append( "<br><br><br><br><div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' type='button' id='viewInfo'> View Info </button><br><br/> <button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
+            $( "#ButtonHolder").append( "<br><br><div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' type='button' id='viewInfo'> View Info </button><br><br/> <button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
 
             // @app.route('/backpack_course/<term>/<school>/<subject>/<course_num>')
             var url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
             $('#addClass').bind('click', function(){
                 $.getJSON(url, function(){});
+                alert("Class Added!");
             });
         }
 
