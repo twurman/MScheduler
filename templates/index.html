@@ -103,6 +103,7 @@ $(document).ready(function(){
             allDay: false
           }]
   });
+
   var calendar2 = $('#calendar2').fullCalendar(
   {
     header: false,
@@ -210,7 +211,7 @@ $(document).ready(function(){
         $( "#ButtonHolder").empty();
         if( termChoice.hasClass('SelClass') )
         {
-            $( "#ButtonHolder").append( "<button class='btn ui-corner-all'> View Info </button><br><br/> <button class='btn ui-corner-all'> Add Class </button>") ;
+            $( "#ButtonHolder").append( "<button class='btn ui-corner-all'> View Info </button><br><br/> <button class='btn ui-corner-all'> Add Class </button>");
         }
 
         if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active')    ){
