@@ -66,13 +66,14 @@ $(document).ready(function(){
     selectHelper: false,
     editable: false,
     allDaySlot:false,
+    weekends:false,
     columnFormat: 'ddd',
     minTime: "08:00:00",
     maxTime: "19:00:00",
     height: "auto",
     events:[{
             title: 'All Day Event',
-            start: new Date(y, m, 1)
+            start: new Date(y, m, 2)
           },
           {
             title: 'Long Event',
@@ -80,16 +81,11 @@ $(document).ready(function(){
             end: new Date(y, m, d-2)
           },
           {
-            id: 999,
+            id: 1,
             title: 'Repeating Event',
-            start: new Date(y, m, d-3, 16, 0),
-            allDay: false
-          },
-          {
-            id: 999,
-            title: 'Repeating Event',
-            start: new Date(y, m, d+4, 16, 0),
-            allDay: false
+            start: new Date(y, m, d-3, 16, 90),
+            allDay: false,
+            
           },
           {
             title: 'Meeting',
@@ -113,11 +109,14 @@ $(document).ready(function(){
     editable: false,
     allDaySlot:false,
     allDaySlot:false,
+    weekends:false,
     columnFormat: 'ddd',
     minTime: "08:00:00",
     maxTime: "19:00:00",
     events:[]
   });
+
+
 
     activePanel = $("#accordion div.panel:first");
     $(activePanel).addClass('active');
@@ -126,6 +125,7 @@ $(document).ready(function(){
     termCode = 0;
     schoolCode = 0;
     subjectCode = 0;
+    courseCode = 0;
 
     $("#accordion").delegate('.TermItem', 'click', function(e){
 
@@ -162,9 +162,7 @@ $(document).ready(function(){
                 $( "#SchoolHolder").append( items );
             });
 
-        }
-        else if( termChoice.hasClass('SelSchool') )
-        {
+        } else if( termChoice.hasClass('SelSchool') ) {
             $( "#SubjectHeader").empty();
             $( "#ClassHeader").empty();
             $( "#ClassHolder").empty();
@@ -183,9 +181,7 @@ $(document).ready(function(){
                 $( "#SubjectHolder").append( items );
             });
 
-        }
-        else if( termChoice.hasClass('SelSubject') )
-        {
+        } else if( termChoice.hasClass('SelSubject') ) {
             $( "#ClassHeader").empty();
             $( "#ClassHeader").append("<strong> Select Class </strong>");
 
@@ -211,7 +207,14 @@ $(document).ready(function(){
         $( "#ButtonHolder").empty();
         if( termChoice.hasClass('SelClass') )
         {
-            $( "#ButtonHolder").append( "<button class='btn ui-corner-all'> View Info </button><br><br/> <button class='btn ui-corner-all'> Add Class </button>");
+            courseCode = termChoice.attr('name');
+            $( "#ButtonHolder").append( "<br><br><br><br><div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' type='button' id='viewInfo'> View Info </button><br><br/> <button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
+
+            // @app.route('/backpack_course/<term>/<school>/<subject>/<course_num>')
+            var url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
+            $('#addClass').bind('click', function(){
+                $.getJSON(url, function(){});
+            });
         }
 
         if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active')    ){

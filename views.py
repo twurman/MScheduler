@@ -10,24 +10,28 @@ def index():
 
     return render_template('index.html', **options)
 
-@app.route('/backpack_course/<term>/<school>/<subject>/<course_num>/<course_title>')
-def backpack_course(term, school, subject, course_num, course_title):
+@app.route('/backpack_course/<term>/<school>/<subject>/<course_num>')
+def backpack_course(term, school, subject, course_num):
 
 	if not 'backpack' in session:
 		backpack = []
 		session['backpack'] = backpack
 
 	backpack_item = {}
-
 	backpack_item['term'] = term
 	backpack_item['school'] = school
 	backpack_item['subject'] = subject
 	backpack_item['course_num'] = course_num
-	backpack_item['course_title'] = course_title
+	# backpack_item['course_title'] = course_title
 	# backpack_item['course_description'] = get_course_description(term, school, subject, course_num)
 	# backpack_item['sections'] = get_sections(term, school, subject, course_num)
 
-	session['backpack'].append(backpack_item)
+	inBackpack = False;
+	for item in session['backpack']:
+		if item['course_num'] == backpack_item['course_num'] and item['subject'] == backpack_item['subject'] and item['school'] == backpack_item['school']:
+			inBackpack = True
+	if not inBackpack:
+		session['backpack'].append(backpack_item)
 	print session['backpack']
 
 	options= {}
