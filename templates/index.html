@@ -56,7 +56,7 @@
   </div>
 </div>
 
-<div class="container" id="backpack_table"> </div>
+<div class="container" id="backpack_table"></div>
 <br>
 
 <div id='calendarHolder'>
@@ -111,7 +111,7 @@ function updateTable(){
   var url = "/backpack";
   $.getJSON( url, function( jsonData ) 
   {
-      var html = "<table class='table table-striped' style='background-color:white; border-radius:5px; align:center'>" 
+      var html = "<table class='table table-striped' style='background-color:white; align:center'>" 
       + "<thead> <th width='80%'>Course</th> <th width='10%'>Edit</th> <th width='10%'>Delete</th> </thead> <tbody>";
       var items = [];
       var i = 0;
@@ -123,7 +123,7 @@ function updateTable(){
           + "</tr>";
       });
 
-      html += "</tbody></table>";
+      html += "</tbody><tfoot><tr><td></td><td></td><td></td></tr></tfoot></table>";
       $( "#backpack_table").append(html);
   });
   
