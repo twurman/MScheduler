@@ -56,8 +56,32 @@
   </div>
 </div>
 
-<div id='calendar1' class="calendar"></div>
-<div id='calendar2' class="calendar"></div>
+<div class="container">
+  <!-- <div class="backpack"> -->
+    <table class="table table-striped" style="background-color:white; border-radius:5px">
+      <thead>
+        <th width="80%">Course</th>
+        <th width="10%">Edit</th>
+        <th width="10%">Delete</th>
+      </thead>
+      <tbody>
+        {% for course in backpack %}
+            <tr>
+              <td>{{ course['subject'] }} {{ course['course_num'] }}</td>
+              <td><button type="button" class="btn btn-warning">Edit</button></td>
+              <td><button type="button" class="btn btn-danger">Delete</button></td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  <!-- </div> -->
+</div>
+<br>
+
+<div id='calendarHolder'>
+  <div id='calendar1' class="calendar"></div>
+  <div id='calendar2' class="calendar"></div>
+</div>
 
 
 
@@ -73,38 +97,33 @@ $(document).ready(function(){
   {
     header:false,
     defaultView: 'agendaWeek',
-    selectable: false,
-    selectHelper: false,
+    selectable: true,
+    selectHelper: true,
     editable: false,
     allDaySlot:false,
     weekends:false,
     columnFormat: 'ddd',
     minTime: "08:00:00",
     maxTime: "19:00:00",
-    height: "auto",
-    events:[{
-            title: 'All Day Event',
-            start: new Date(y, m, 2)
-          },
-          {
-            title: 'Long Event',
-            start: new Date(y, m, d-5),
-            end: new Date(y, m, d-2)
-          },
+    events:[
           {
             id: 1,
             title: 'Repeating Event',
-            start: new Date(y, m, d-3, 16, 90),
+            start: new Date(y, m, d, 14, 30),
             allDay: false,
-            
+            backgroundColor: 'red'
           },
           {
+            id: 2,
             title: 'Meeting',
+            backgroundColor: 'blue',
             start: new Date(y, m, d, 10, 30),
+            end: new Date(y, m, d, 11, 30),
             allDay: false
           },
           {
             title: 'Lunch',
+            backgroundColor: 'green',
             start: new Date(y, m, d, 12, 0),
             end: new Date(y, m, d, 14, 0),
             allDay: false
