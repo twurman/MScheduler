@@ -68,8 +68,11 @@
   <!-- </div> -->
 </div>
 <br>
-<div id='calendar1' class="calendar"></div>
-<div id='calendar2' class="calendar"></div>
+
+<div id='calendarHolder'>
+  <div id='calendar1' class="calendar"></div>
+  <div id='calendar2' class="calendar"></div>
+</div>
 
 <script>
 $(document).ready(function(){
@@ -89,24 +92,27 @@ $(document).ready(function(){
     allDaySlot:false,
     weekends:false,
     columnFormat: 'ddd',
-    axisFormat: 'h:mm',
-    slotMinutes: 60,
+    minTime: "08:00:00",
+    maxTime: "19:00:00",
     events:[
           {
             id: 1,
             title: 'Repeating Event',
-            start: new Date(y, m, d, 16, 90),
-            allDay: false
+            start: new Date(y, m, d, 14, 30),
+            allDay: false,
+            backgroundColor: 'red'
           },
           {
             id: 2,
             title: 'Meeting',
+            backgroundColor: 'blue',
             start: new Date(y, m, d, 10, 30),
             end: new Date(y, m, d, 11, 30),
             allDay: false
           },
           {
             title: 'Lunch',
+            backgroundColor: 'green',
             start: new Date(y, m, d, 12, 0),
             end: new Date(y, m, d, 14, 0),
             allDay: false
