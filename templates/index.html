@@ -106,26 +106,27 @@ function refreshCals(){
 function updateTable(){
 
   $( "#backpack_table").empty();
-
-  $( "#backpack_table").append( "<table class='table table-striped' style='background-color:white; border-radius:5px; align:center'>" 
-    + "<thead> <th width='80%'>Course</th> <th width='10%'>Edit</th> <th width='10%'>Delete</th> </thead> <tbody>");
+  
 
   var url = "/backpack";
   $.getJSON( url, function( jsonData ) 
   {
+      var html = "<table class='table table-striped' style='background-color:white; border-radius:5px; align:center'>" 
+      + "<thead> <th width='80%'>Course</th> <th width='10%'>Edit</th> <th width='10%'>Delete</th> </thead> <tbody>";
       var items = [];
       var i = 0;
       $.each( jsonData, function( key, obj ) {
-
         //create new row in table
-        $( "#backpack_table").append( "<tr> <td>" + obj.subject + " " + obj.course_num + "</td>"
+        html += "<tr> <td>" + obj.subject + " " + obj.course_num + "</td>"
           + "<td><button type='button' class='btn btn-warning'>Edit</button></td>"
           + "<td><button type='button' class='btn btn-danger'>Delete</button></td>"
-          + "</tr>");
+          + "</tr>";
       });
-  });
 
-  $( "#backpack_table").append( "</tbody></table>");
+      html += "</tbody></table>";
+      $( "#backpack_table").append(html);
+  });
+  
 }
 
 
