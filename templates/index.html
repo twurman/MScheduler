@@ -84,12 +84,7 @@
 </div>
 
 <script>
-$(document).ready(function(){
-
-  var date = new Date();
-  var d = date.getDate();
-  var m = date.getMonth();
-  var y = date.getFullYear();
+function refreshCals(){
 
   $( "#calendarHolder").empty();
 
@@ -114,8 +109,8 @@ $(document).ready(function(){
           allDaySlot:false,
           weekends:false,
           columnFormat: 'ddd',
-          minTime: "08:00:00",
-          maxTime: "19:00:00",
+          minTime: "08:30:00",
+          maxTime: "18:30:00",
           events:obj
         });
 
@@ -124,65 +119,19 @@ $(document).ready(function(){
         //increment i
         i = i+1;
       });
-
-      
   });
-
-  /*var calendar = $('#calendar0').fullCalendar(
-  {
-    header:false,
-    defaultView: 'agendaWeek',
-    selectable: true,
-    selectHelper: true,
-    editable: false,
-    allDaySlot:false,
-    weekends:false,
-    columnFormat: 'ddd',
-    minTime: "08:00:00",
-    maxTime: "19:00:00",
-    events:[
-          {
-            id: 1,
-            title: 'Repeating Event',
-            start: new Date(y, m, d, 14, 30),
-            allDay: false,
-            backgroundColor: 'red'
-          },
-          {
-            id: 2,
-            title: 'Meeting',
-            backgroundColor: 'blue',
-            start: new Date(y, m, d, 10, 30),
-            end: new Date(y, m, d, 11, 30),
-            allDay: false
-          },
-          {
-            title: 'Lunch',
-            backgroundColor: 'green',
-            start: new Date(y, m, d, 12, 0),
-            end: new Date(y, m, d, 14, 0),
-            allDay: false
-          }]
-  });
-
-  var calendar2 = $('#calendar1').fullCalendar(
-  {
-    header: false,
-    defaultView: 'agendaWeek',
-    selectable: false,
-    selectHelper: false,
-    editable: false,
-    allDaySlot:false,
-    allDaySlot:false,
-    weekends:false,
-    columnFormat: 'ddd',
-    minTime: "08:00:00",
-    maxTime: "19:00:00",
-    events:[]
-  });*/
+}
 
 
 
+$(document).ready(function(){
+
+  var date = new Date();
+  var d = date.getDate();
+  var m = date.getMonth();
+  var y = date.getFullYear();
+
+  refreshCals();
     activePanel = $("#accordion div.panel:first");
     $(activePanel).addClass('active');
 
