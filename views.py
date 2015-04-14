@@ -8,6 +8,12 @@ def index():
 
     options['terms'] = get_terms()
 
+    if not 'backpack' in session:
+		backpack = []
+		session['backpack'] = backpack
+	
+    options['backpack'] = session['backpack']
+
     return render_template('index.html', **options)
 
 @app.route('/backpack_course/<term>/<school>/<subject>/<course_num>')

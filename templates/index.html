@@ -47,6 +47,27 @@
     </div>
 </div>
 
+<div class="container">
+  <!-- <div class="backpack"> -->
+    <table class="table table-striped" style="background-color:white; border-radius:5px">
+      <thead>
+        <th width="80%">Course</th>
+        <th width="10%">Edit</th>
+        <th width="10%">Delete</th>
+      </thead>
+      <tbody>
+        {% for course in backpack %}
+            <tr>
+              <td>{{ course['subject'] }} {{ course['course_num'] }}</td>
+              <td><button type="button" class="btn btn-warning">Edit</button></td>
+              <td><button type="button" class="btn btn-danger">Delete</button></td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  <!-- </div> -->
+</div>
+<br>
 <div id='calendar1' class="calendar"></div>
 <div id='calendar2' class="calendar"></div>
 
