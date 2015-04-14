@@ -64,13 +64,9 @@
         <th width="10%">Edit</th>
         <th width="10%">Delete</th>
       </thead>
-      <tbody>
+      <tbody id="backpack_table">
         {% for course in backpack %}
-            <tr>
-              <td>{{ course['subject'] }} {{ course['course_num'] }}</td>
-              <td><button type="button" class="btn btn-warning">Edit</button></td>
-              <td><button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
+            
         {% endfor %}
       </tbody>
     </table>
@@ -122,6 +118,28 @@ function refreshCals(){
   });
 }
 
+function updateTable(){
+
+  $( "#backpack_table").empty();
+
+  var url = "/backpack";
+  $.getJSON( url, function( jsonData ) 
+  {
+      var items = [];
+      var i = 0;
+      $.each( jsonData, function( key, obj ) {
+
+        //create new row in table
+        $( "#backpack_table").append( "<tr> 
+          <td>" + obj.subject + " " + obj.course_num + "</td>
+          <td><button type='button' class='btn btn-warning'>Edit</button></td>
+          <td><button type='button' class='btn btn-danger'>Delete</button></td>
+          </tr>
+          " );
+      });
+  });
+}
+
 
 
 $(document).ready(function(){
@@ -132,6 +150,7 @@ $(document).ready(function(){
   var y = date.getFullYear();
 
   refreshCals();
+  updateTable();
     activePanel = $("#accordion div.panel:first");
     $(activePanel).addClass('active');
 
