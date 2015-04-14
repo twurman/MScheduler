@@ -84,6 +84,46 @@
 </div>
 
 <script>
+function refreshCals(){
+
+  $( "#calendarHolder").empty();
+
+  var url = "/get_schedules";
+  $.getJSON( url, function( jsonData ) 
+  {
+      var items = [];
+      var i = 0;
+      $.each( jsonData, function( key, obj ) {
+
+        //create new calendar div
+        $( "#calendarHolder").append( "<div id='calendar" + i + "' class='calendar'</div>" );
+
+        //create calendar for this div
+        var calendar = $('#calendar' + i).fullCalendar(
+        {
+          header:false,
+          defaultView: 'agendaWeek',
+          selectable: true,
+          selectHelper: true,
+          editable: false,
+          allDaySlot:false,
+          weekends:false,
+          columnFormat: 'ddd',
+          minTime: "08:30:00",
+          maxTime: "18:30:00",
+          events:obj
+        });
+
+        console.log(obj);
+
+        //increment i
+        i = i+1;
+      });
+  });
+}
+
+
+
 $(document).ready(function(){
 
   var date = new Date();
@@ -91,61 +131,7 @@ $(document).ready(function(){
   var m = date.getMonth();
   var y = date.getFullYear();
 
-  var calendar = $('#calendar1').fullCalendar(
-  {
-    header:false,
-    defaultView: 'agendaWeek',
-    selectable: true,
-    selectHelper: true,
-    editable: false,
-    allDaySlot:false,
-    weekends:false,
-    columnFormat: 'ddd',
-    minTime: "08:00:00",
-    maxTime: "19:00:00",
-    events:[
-          {
-            id: 1,
-            title: 'Repeating Event',
-            start: new Date(y, m, d, 14, 30),
-            allDay: false,
-            backgroundColor: 'red'
-          },
-          {
-            id: 2,
-            title: 'Meeting',
-            backgroundColor: 'blue',
-            start: new Date(y, m, d, 10, 30),
-            end: new Date(y, m, d, 11, 30),
-            allDay: false
-          },
-          {
-            title: 'Lunch',
-            backgroundColor: 'green',
-            start: new Date(y, m, d, 12, 0),
-            end: new Date(y, m, d, 14, 0),
-            allDay: false
-          }]
-  });
-
-  var calendar2 = $('#calendar2').fullCalendar(
-  {
-    header: false,
-    defaultView: 'agendaWeek',
-    selectable: false,
-    selectHelper: false,
-    editable: false,
-    allDaySlot:false,
-    allDaySlot:false,
-    weekends:false,
-    columnFormat: 'ddd',
-    minTime: "08:00:00",
-    maxTime: "19:00:00",
-    events:[]
-  });
-
-
-
+  refreshCals();
     activePanel = $("#accordion div.panel:first");
     $(activePanel).addClass('active');
 
@@ -281,13 +267,13 @@ $(document).ready(function(){
 	                $(panelToActivate).animate({width: "+=10%"}, 120);
 	            }
 	        }
-            //no longer active
-            $('#accordion .panel').removeClass('active');
-            //set active to the selection
-            $(panelToActivate).addClass('active');
-            //(Depricated)
-            activePanel = $(panelToActivate);
-         };
+          //no longer active
+          $('#accordion .panel').removeClass('active');
+          //set active to the selection
+          $(panelToActivate).addClass('active');
+          //(Depricated)
+          activePanel = $(panelToActivate);
+        };
     });
 });
 </script>
