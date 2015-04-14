@@ -62,34 +62,26 @@ $(document).ready(function(){
   {
     header:false,
     defaultView: 'agendaWeek',
-    selectable: false,
-    selectHelper: false,
+    selectable: true,
+    selectHelper: true,
     editable: false,
     allDaySlot:false,
     weekends:false,
     columnFormat: 'ddd',
-    minTime: "08:00:00",
-    maxTime: "19:00:00",
-    height: "auto",
-    events:[{
-            title: 'All Day Event',
-            start: new Date(y, m, 2)
-          },
-          {
-            title: 'Long Event',
-            start: new Date(y, m, d-5),
-            end: new Date(y, m, d-2)
-          },
+    axisFormat: 'h:mm',
+    slotMinutes: 60,
+    events:[
           {
             id: 1,
             title: 'Repeating Event',
-            start: new Date(y, m, d-3, 16, 90),
-            allDay: false,
-            
+            start: new Date(y, m, d, 16, 90),
+            allDay: false
           },
           {
+            id: 2,
             title: 'Meeting',
             start: new Date(y, m, d, 10, 30),
+            end: new Date(y, m, d, 11, 30),
             allDay: false
           },
           {
