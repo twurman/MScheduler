@@ -91,7 +91,44 @@ $(document).ready(function(){
   var m = date.getMonth();
   var y = date.getFullYear();
 
-  var calendar = $('#calendar1').fullCalendar(
+  $( "#calendarHolder").empty();
+
+  var url = "/get_schedules";
+  $.getJSON( url, function( jsonData ) 
+  {
+      var items = [];
+      var i = 0;
+      $.each( jsonData, function( key, obj ) {
+
+        //create new calendar div
+        $( "#calendarHolder").append( "<div id='calendar" + i + "' class='calendar'</div>" );
+
+        //create calendar for this div
+        var calendar = $('#calendar' + i).fullCalendar(
+        {
+          header:false,
+          defaultView: 'agendaWeek',
+          selectable: true,
+          selectHelper: true,
+          editable: false,
+          allDaySlot:false,
+          weekends:false,
+          columnFormat: 'ddd',
+          minTime: "08:00:00",
+          maxTime: "19:00:00",
+          events:obj
+        });
+
+        console.log(obj);
+
+        //increment i
+        i = i+1;
+      });
+
+      
+  });
+
+  /*var calendar = $('#calendar0').fullCalendar(
   {
     header:false,
     defaultView: 'agendaWeek',
@@ -128,7 +165,7 @@ $(document).ready(function(){
           }]
   });
 
-  var calendar2 = $('#calendar2').fullCalendar(
+  var calendar2 = $('#calendar1').fullCalendar(
   {
     header: false,
     defaultView: 'agendaWeek',
@@ -142,7 +179,7 @@ $(document).ready(function(){
     minTime: "08:00:00",
     maxTime: "19:00:00",
     events:[]
-  });
+  });*/
 
 
 
@@ -281,13 +318,13 @@ $(document).ready(function(){
 	                $(panelToActivate).animate({width: "+=10%"}, 120);
 	            }
 	        }
-            //no longer active
-            $('#accordion .panel').removeClass('active');
-            //set active to the selection
-            $(panelToActivate).addClass('active');
-            //(Depricated)
-            activePanel = $(panelToActivate);
-         };
+          //no longer active
+          $('#accordion .panel').removeClass('active');
+          //set active to the selection
+          $(panelToActivate).addClass('active');
+          //(Depricated)
+          activePanel = $(panelToActivate);
+        };
     });
 });
 </script>
