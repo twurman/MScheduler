@@ -42,8 +42,11 @@ def backpack_course(term, school, subject, course_num):
         session['backpack'].append(backpack_item)
     print session['backpack']
 
-    options= {}
-    return render_template('index.html', **options)
+    return ''
+
+@app.route('/backpack')
+def getbackpack():
+	return json.dumps(session['backpack'])
 
 @app.route('/get_schedules')
 def get_scheds():
