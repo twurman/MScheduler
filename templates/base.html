@@ -30,7 +30,7 @@
       <style type="text/css">
 
         #content{
-          width: 94%;
+          width: 100%;
           margin: 0px 0px 0px 0px;
           padding: 0px 0px 0px 0px;
         }
@@ -39,7 +39,7 @@
           margin: 3%;
           padding:0;
           height:370px;
-          width:100%;
+          width:94%;
           overflow:hidden;
         }
 
@@ -199,8 +199,9 @@
         .calendar
         {
           float: left;
-          margin-left: 44px;
-          width:calc(50% - 44px);
+          margin-left: 2.5%;
+          margin-right: 2.5%;
+          width: 45%;
           background-color: white;
         }
 
@@ -231,7 +232,7 @@
 
 
 
-    <div id="content" class="col-md-10 col-md-offset-1">
+    <div id="content" class="col-md-12">
         {% block content %}{% endblock %}
     </div>
     <div id="footer" >
