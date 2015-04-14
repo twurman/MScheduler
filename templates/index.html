@@ -31,6 +31,7 @@
       		<div id="SubjectHolder" class="TermHolder"></div>
       </div>
     </div>
+
     <div class="panel">
       <div class="pink dark3"></div>
       <div id="Classes" class="panelContent p4">
@@ -38,6 +39,7 @@
       		<div id="ClassHolder" class="TermHolder"></div>
       </div>
     </div>
+
     <div class="panel FinalStage">
       <div class="pink dark4"></div>
       <div id="Button" class="panelContent p5">
@@ -45,6 +47,13 @@
         <div id="ButtonHolder" class="TermHolder"></div>
       </div>
     </div>
+</div>
+
+<div class="panel1" id="Viewer">
+  <div class = "pink dark3"></div>
+  <div id="ViewInfo" class="panel1Content">
+
+  </div>
 </div>
 
 <div class="container">
@@ -73,6 +82,8 @@
   <div id='calendar1' class="calendar"></div>
   <div id='calendar2' class="calendar"></div>
 </div>
+
+
 
 <script>
 $(document).ready(function(){
@@ -235,7 +246,12 @@ $(document).ready(function(){
                 $.getJSON(url, function(){});
                 alert("Class Added!");
             });
+
+            $('#viewInfo').bind('click', function(){
+              alert("ViewClass")
+            });
         }
+
 
         if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active')    ){
 
