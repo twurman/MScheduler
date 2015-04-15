@@ -133,20 +133,21 @@ function onFilterChange()
   //all of the checked days
   $("input[name='user_group[]']:checked")
   var skipDayVals = new Array();
-  $.each($("input[name='user_group[]']:checked"), function() {
+  $.each($("input[name='chk_group[]']:checked"), function() {
     skipDayVals.push($(this).val());
   });
+  console.log(skipDayVals);
 
-  var mon = true;
-  var tues = true;
-  var wed = true;
-  var thurs = true;
-  var fri = true;
+  var mon = skipDayVals.indexOf("0") > -1;
+  var tues = skipDayVals.indexOf("1") > -1;
+  var wed = skipDayVals.indexOf("2") > -1;
+  var thurs = skipDayVals.indexOf("3") > -1;
+  var fri = skipDayVals.indexOf("4") > -1;
 
   //@app.route('/filter/<earliestClass>/<latestEndTime>/<sortBy>/<mon>/<tues>/<wed>/<thurs>/<fri>')
   var url='/filter/' + earliestClass + '/' + lastClass + '/' + sortBy + '/' + mon + '/' + tues + '/' + wed + '/' + thurs + '/' + fri;
   $.getJSON(url, function(){});
-  alert("updatedFilters");
+  //alert("updatedFilters");
 }
 
 function refreshCals(){
