@@ -82,8 +82,8 @@ def get_scheds():
             'id': 3,
             'title': 'Class 3',
             'allDay': False,
-            'start': (current_week + timedelta(days=1)).isoformat(),
-            'end': (current_week + timedelta(days=1,hours=1)).isoformat(),
+            'start': (current_week + timedelta(days=1,hours=4)).isoformat(),
+            'end': (current_week + timedelta(days=1,hours=6)).isoformat(),
             'backgroundColor': 'green',
         },
     ]
