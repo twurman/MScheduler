@@ -103,6 +103,29 @@ def get_scheds():
     ]
     return json.dumps([ test_events, test_events, test_events ])
 
+@app.route('/filter/<earliestClass>/<latestEndTime>/<sortBy>/<mon>/<tues>/<wed>/<thurs>/<fri>')
+def send_filters(earliestClass, latestEndTime, sortBy, mon, tues, wed, thurs, fri):
+
+    if not 'filters' in session:
+        filters =[] 
+        session['filters'] = filters
+
+    filter_item = {}
+    filter_item['earliestClass'] = earliestClass
+    filter_item['latestEndTime'] = latestEndTime
+    filter_item['sortBy'] = sortBy
+    filter_item['monClass'] = mon
+    filter_item['tuesClass'] = tues
+    filter_item['wedClass'] = wed
+    filter_item['thursClass'] = thurs
+    filter_item['friClass'] = fri
+
+
+    session['filters'] = filter_item
+    print session['backpack']
+
+    return ''
+
 @app.route('/course_description/<term>/<school>/<subject>/<course_num>/<course_title>')
 def course_description(term, school, subject, course_num, course_title):
 

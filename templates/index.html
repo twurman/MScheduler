@@ -54,9 +54,9 @@
   <div id="ViewInfo" class="FiltersHolder">
     <div id="GlobalFilterHeader" class="GlobalHeader"><strong>FILTERS</strong></div>
     <div id="GlobalFilters" class="GlobalFilters">
-      <div id ="earliestClass" class="filter1"><strong>Choose Earliest Start Time:</strong>
+      <div class="filter1"><strong>Choose Earliest Start Time:</strong>
         <br>
-        <select>
+        <select id="earliestClass" onchange="onFilterChange()">
           <option value="8" selected="selected">8am</option>
           <option value="9">9am</option>
           <option value="10">10am</option>
@@ -69,9 +69,9 @@
           <option value="17">5pm</option>
         </select>
       </div>
-      <div id ="lastClass" class="filter1"><strong>Choose Latest End Time:</strong>
+      <div class="filter1"><strong>Choose Latest End Time:</strong>
         <br>
-        <select>
+        <select id="lastClass" onchange="onFilterChange()">
             <option value="11">11am</option>
             <option value="12">Noon</option>
             <option value="13">1pm</option>
@@ -85,22 +85,22 @@
             <option value="21" selected="selected">9pm</option>
           </select>
       </div>
-      <div id ="sortBy" class="filter1"><strong>Sort Results By:</strong>
+      <div class="filter1"><strong>Sort Results By:</strong>
         <br>
-        <select>
-          <option value="Earliest Start" selected="selected">Earliest Start</option>
-          <option value="Latest Start">Latest Start</option>
-          <option value="Earliest End">Earliest End</option>
-          <option value="Latest End">Latest End</option>
+        <select id="sortBy" onchange="onFilterChange()">
+          <option value="Earliest_Start" selected="selected">Earliest Start</option>
+          <option value="Latest_Start">Latest Start</option>
+          <option value="Earliest_End">Earliest End</option>
+          <option value="Latest_End">Latest End</option>
         </select>
       </div>
       <div id ="blockDay" class="filter2"> <strong>I Would Like No Class On:</strong>
         <br>
-        <input type="checkbox" name="chk_group[]" value="monday" />Monday<br />
-        <input type="checkbox" name="chk_group[]" value="tuesday" />Tuesday<br />
-        <input type="checkbox" name="chk_group[]" value="wednesday" />Wednesday<br />
-        <input type="checkbox" name="chk_group[]" value="monday" />Thursday<br />
-        <input type="checkbox" name="chk_group[]" value="tuesday" />Friday<br />
+        <input type="checkbox" name="chk_group[]" value="0" onclick="onFilterChange()" />Monday<br />
+        <input type="checkbox" name="chk_group[]" value="1" onclick="onFilterChange()" />Tuesday<br />
+        <input type="checkbox" name="chk_group[]" value="2" onclick="onFilterChange()" />Wednesday<br />
+        <input type="checkbox" name="chk_group[]" value="3" onclick="onFilterChange()" />Thursday<br />
+        <input type="checkbox" name="chk_group[]" value="4" onclick="onFilterChange()" />Friday<br />
       </div>
     </div>
   </div>
@@ -114,6 +114,40 @@
 <script>
 
 var colors = ["red", "blue", "green", "orange", "purple", "yellow", "DodgerBlue", "DarkCyan", "SteelBlue", "YellowGreen"];
+
+
+function onFilterChange()
+{
+  //the selected early start time
+  var e = document.getElementById("earliestClass");
+  var earliestClass = e.options[e.selectedIndex].value;
+
+  //the selected late end time
+  var e = document.getElementById("lastClass");
+  var lastClass = e.options[e.selectedIndex].value;
+
+  //the selected sorter
+  var e = document.getElementById("sortBy");
+  var sortBy = e.options[e.selectedIndex].value;
+
+  //all of the checked days
+  $("input[name='user_group[]']:checked")
+  var skipDayVals = new Array();
+  $.each($("input[name='user_group[]']:checked"), function() {
+    skipDayVals.push($(this).val());
+  });
+
+  var mon = true;
+  var tues = true;
+  var wed = true;
+  var thurs = true;
+  var fri = true;
+
+  //@app.route('/filter/<earliestClass>/<latestEndTime>/<sortBy>/<mon>/<tues>/<wed>/<thurs>/<fri>')
+  var url='/filter/' + earliestClass + '/' + lastClass + '/' + sortBy + '/' + mon + '/' + tues + '/' + wed + '/' + thurs + '/' + fri;
+  $.getJSON(url, function(){});
+  alert("updatedFilters");
+}
 
 function refreshCals(){
 
