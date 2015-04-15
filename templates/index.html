@@ -10,10 +10,7 @@
       <div class="panelContent p1">
       	<div id="TermSelHeader" class="SelHeader"><strong> Select Term </strong></div><br><br/>
       	<div id="TermSelHolder" class="TermHolder"> 
-        {% for term in terms %}
-            <div class="TermItem SelTerm" name="{{term['TermCode']}}" <a href="{{term['TermCode']}}">{{ term['TermDescr'] }}</a></div>
-            <br>
-        {% endfor %}
+            <div class="TermItem SelTerm" name="2060" <a href="2060">Fall 2015</a></div>
         </div>
       </div>
     </div>
@@ -57,7 +54,7 @@
   <div id="ViewInfo" class="FiltersHolder">
     <div id="GlobalFilterHeader" class="GlobalHeader">FILTERS</div>
     <div id="GlobalFilters" class="GlobalFilters">
-      <div id ="earliestClass" class="filter1">Choose Earliest Start Time:
+      <div id ="earliestClass" class="filter1"><strong>Choose Earliest Start Time:</strong>
         <br>
         <select>
           <option value="8" selected="selected">8am</option>
@@ -72,7 +69,7 @@
           <option value="17">5pm</option>
         </select>
       </div>
-      <div id ="lastClass" class="filter1"> Choose Latest End Time:
+      <div id ="lastClass" class="filter1"><strong>Choose Latest End Time:</strong>
         <br>
         <select>
             <option value="11">11am</option>
@@ -88,7 +85,7 @@
             <option value="21" selected="selected">9pm</option>
           </select>
       </div>
-      <div id ="blockDay" class="filter2"> Try to have no class on:
+      <div id ="blockDay" class="filter2"> <strong>I Would Like No Class On:</strong>
         <br>
         <input type="checkbox" name="chk_group[]" value="monday" />Monday<br />
         <input type="checkbox" name="chk_group[]" value="tuesday" />Tuesday<br />
