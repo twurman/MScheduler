@@ -162,6 +162,14 @@ function onFilterChange()
   //alert("updatedFilters");
 }
 
+function greaterTime(first, second) {
+    //Assuming dates are the same year
+    if (first.clone().dayOfYear(0).isBefore(second.clone().dayOfYear(0)))
+        return second;
+    else
+        return first;
+}
+
 function refreshCals(){
 
   $( "#calendarHolder").empty();
@@ -171,10 +179,40 @@ function refreshCals(){
   {
       var items = [];
       var i = 0;
+      var earlyStart = new Date();
+      var lateEnd = new Date();
+      earlyStart.setHours(23);
+      lateEnd.setHours(2);
       $.each( jsonData, function( key, obj ) {
 
         //create new calendar div
         $( "#calendarHolder").append( "<div id='calendar" + i + "' class='calendar'</div>" );
+
+        for( var j = 0; j < obj.length; j++ )
+        {
+          var tempDate = (moment(obj[j].start)).toDate();
+          console.log("Temp is at:" + tempDate);
+          tempDate.setDate(earlyStart.getDate());
+
+          console.log("Early is at:" + earlyStart);
+
+          if( earlyStart > tempDate )
+          {
+            earlyStart.setHours(tempDate.getHours());
+          }
+
+          var tempEnd = (moment(obj[j].end)).toDate();
+          tempEnd.setDate(lateEnd.getDate());
+
+          if( lateEnd < tempEnd )
+          {
+            lateEnd.setHours(tempEnd.getHours()+1);
+          }
+
+        }
+
+        var minTimeString = earlyStart.getHours() + ":00:00";
+        var maxTimeString = lateEnd.getHours() + ":00:00";
 
         //create calendar for this div
         var calendar = $('#calendar' + i).fullCalendar(
@@ -188,8 +226,8 @@ function refreshCals(){
           weekends:false,
           height: "auto",
           columnFormat: 'ddd',
-          minTime: "08:30:00",
-          maxTime: "18:30:00",
+          minTime: minTimeString,
+          maxTime: maxTimeString,
           events:obj
         });
 
