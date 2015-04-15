@@ -172,9 +172,10 @@ function greaterTime(first, second) {
 
 function refreshCals(){
 
-  $( "#calendarHolder").empty();
+  $( "#calendarHolder").fadeTo('slow',0).slideUp(function() {
+    $("#calendarHolder").empty();
 
-  var url = "/get_schedules";
+    var url = "/get_schedules";
   $.getJSON( url, function( jsonData ) 
   {
       var items = [];
@@ -237,6 +238,10 @@ function refreshCals(){
         i = i+1;
       });
   });
+  $( "#calendarHolder").fadeTo('fast',100).slideDown();
+  });
+
+  
 }
 
 function updateTable(){
