@@ -147,6 +147,8 @@ function onFilterChange()
   //@app.route('/filter/<earliestClass>/<latestEndTime>/<sortBy>/<mon>/<tues>/<wed>/<thurs>/<fri>')
   var url='/filter/' + earliestClass + '/' + lastClass + '/' + sortBy + '/' + mon + '/' + tues + '/' + wed + '/' + thurs + '/' + fri;
   $.getJSON(url, function(){});
+
+  refreshCals();
   //alert("updatedFilters");
 }
 
