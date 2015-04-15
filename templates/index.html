@@ -54,7 +54,7 @@
   <div id="ViewInfo" class="FiltersHolder">
     <div id="GlobalFilterHeader" class="GlobalHeader"><strong>FILTERS</strong></div>
     <div id="GlobalFilters" class="GlobalFilters">
-      <div class="filter1"><strong>Choose Earliest Start Time:</strong>
+      <div class="filter1"><strong>I Can't Wake Up Any Earlier Than...:</strong>
         <br>
         <select id="earliestClass" onchange="onFilterChange()">
           <option value="8" selected="selected">8am</option>
@@ -69,7 +69,7 @@
           <option value="17">5pm</option>
         </select>
       </div>
-      <div class="filter1"><strong>Choose Latest End Time:</strong>
+      <div class="filter1"><strong>Please Let Me Go To Sleep By...:</strong>
         <br>
         <select id="lastClass" onchange="onFilterChange()">
             <option value="11">11am</option>
@@ -227,8 +227,9 @@ $(document).ready(function(){
   var m = date.getMonth();
   var y = date.getFullYear();
 
-  refreshCals();
   updateTable();
+  onFilterChange();
+  
   activePanel = $("#accordion div.panel:first");
   $(activePanel).addClass('active');
 
