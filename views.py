@@ -51,21 +51,40 @@ def getbackpack():
 @app.route('/get_schedules')
 def get_scheds():
     current_week = datetime.today()
-    current_week.replace(day=(current_week.day - current_week.weekday()) )
+    current_week = current_week.replace(hour=9,minute=30)
+
     test_events = [
         {
             'id': 0,
-            'title': 'Class 1',
+            'title': 'Class 2',
             'allDay': False,
-            'start': current_week.isoformat(),
-            'end': (current_week + timedelta(hours=1)).isoformat(),
+            'start': (current_week + timedelta(hours=1)).isoformat(),
+            'end': (current_week + timedelta(hours=3)).isoformat(),
+            'backgroundColor': '#E60000',
         },
         {
             'id': 1,
             'title': 'Class 2',
             'allDay': False,
+            'start': (current_week + timedelta(days=2,hours=1)).isoformat(),
+            'end': (current_week + timedelta(days=2,hours=3)).isoformat(),
+            'backgroundColor': '#E60000',
+        },
+        {
+            'id': 2,
+            'title': 'Class 1',
+            'allDay': False,
+            'start': current_week.isoformat(),
+            'end': (current_week + timedelta(hours=1)).isoformat(),
+            'backgroundColor': 'blue',
+        },
+        {
+            'id': 3,
+            'title': 'Class 3',
+            'allDay': False,
             'start': (current_week + timedelta(days=1)).isoformat(),
             'end': (current_week + timedelta(days=1,hours=1)).isoformat(),
+            'backgroundColor': 'green',
         },
     ]
     return json.dumps([ test_events, test_events, test_events ])
