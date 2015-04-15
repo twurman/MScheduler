@@ -148,7 +148,6 @@ function refreshCals(){
 function updateTable(){
 
   $( "#backpack_table").empty();
-  
 
   var url = "/backpack";
   $.getJSON( url, function( jsonData ) 
@@ -163,6 +162,8 @@ function updateTable(){
           + "<td><button type='button' class='btn btn-warning'>Edit</button></td>"
           + "<td><button type='button' class='btn btn-danger'>Delete</button></td>"
           + "</tr>";
+
+
       });
 
       html += "</tbody><tfoot><tr><td></td><td></td><td></td></tr></tfoot></table>";
@@ -182,151 +183,151 @@ $(document).ready(function(){
 
   refreshCals();
   updateTable();
-    activePanel = $("#accordion div.panel:first");
-    $(activePanel).addClass('active');
+  activePanel = $("#accordion div.panel:first");
+  $(activePanel).addClass('active');
 
-    termChoice = $("accordion .TermItem:first");
-    termCode = 0;
-    schoolCode = 0;
-    subjectCode = 0;
-    courseCode = 0;
+  termChoice = $("accordion .TermItem:first");
+  termCode = 0;
+  schoolCode = 0;
+  subjectCode = 0;
+  courseCode = 0;
 
-    $("#accordion").delegate('.TermItem', 'click', function(e){
+  $("#accordion").delegate('.TermItem', 'click', function(e){
 
-        currentPanel = $(this).parent('.TermHolder').parent('.panelContent').parent('.panel');
-        panelToActivate = currentPanel.nextAll('.panel:first');
-        termChoice = $(this);
+      currentPanel = $(this).parent('.TermHolder').parent('.panelContent').parent('.panel');
+      panelToActivate = currentPanel.nextAll('.panel:first');
+      termChoice = $(this);
 
-        currentPanel.find('.TermItem').removeClass('active');
-        currentPanel.nextAll('.panel').find('.TermItem').removeClass('active');
-        termChoice.addClass('active');
-
-
-        //Ajax requests
-        if( termChoice.hasClass('SelTerm') )
-        {
-            $( "#SchoolHeader").empty();
-            $( "#SubjectHolder").empty();
-            $( "#ClassHolder").empty();
-            $( "#SubjectHeader").empty();
-            $( "#ClassHeader").empty();
-            $( "#SchoolHeader").append("<strong> Select School </strong>");
-
-        	termCode = termChoice.attr('name');
-        	$( "#SchoolHolder").empty();
-            var url = "{{ config['api_url'] }}/get_schools?term_code=" + termChoice.attr('name');
-            $.getJSON( url, function( jsonData ) {
-                var items = [];
-                $.each( jsonData, function( key, obj ) {
-                    //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
-                    items.push( "<div class='TermItem SelSchool' name='" + obj.SchoolCode + "' <p>" + obj.SchoolDescr + " </p></div>"  );
-                });
-
-                //$( "#SchoolHolder").append("<strong> Select School </strong><br><br/>");
-                $( "#SchoolHolder").append( items );
-            });
-
-        } else if( termChoice.hasClass('SelSchool') ) {
-            $( "#SubjectHeader").empty();
-            $( "#ClassHeader").empty();
-            $( "#ClassHolder").empty();
-            $( "#SubjectHeader").append("<strong> Select Subject </strong>");
-
-        	schoolCode = termChoice.attr('name');
-        	$( "#SubjectHolder").empty();
-        	var url = "{{ config['api_url'] }}/get_subjects?term_code=" + termCode + "&school=" + schoolCode;
-            $.getJSON( url, function( jsonData ) {
-                var items = [];
-                $.each( jsonData, function( key, obj ) {
-                    //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
-                    items.push( "<div class='TermItem SelSubject' name='" + obj.SubjectCode + "' <p> (" + obj.SubjectShortDescr + ") " + obj.SubjectDescr + " </p></div>"  );
-                });
-
-                $( "#SubjectHolder").append( items );
-            });
-
-        } else if( termChoice.hasClass('SelSubject') ) {
-            $( "#ClassHeader").empty();
-            $( "#ClassHeader").append("<strong> Select Class </strong>");
-
-        	subjectCode = termChoice.attr('name');
-        	$( "#ClassHolder").empty();
-        	var url = "{{ config['api_url'] }}/get_catalog_numbers?term_code=" + termCode + "&school=" + schoolCode + "&subject=" + subjectCode;
-            $.getJSON( url, function( jsonData ) {
-                var items = [];
-                $.each( jsonData, function( key, obj ) {
-                    //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
-                    items.push( "<div class='TermItem SelClass' name='" + obj.CatalogNumber + "' <p> (" + obj.CatalogNumber + ") " + obj.CourseDescr + " </p></div>"  );
-                });
-
-                $( "#ClassHolder").append( items );
-
-                if( items.length <= 0 )
-                {
-                	$( "#ClassHolder").append( "<p> This subject has no classes this term :( </p>" );
-                }
-            });
-        }
-
-        $( "#ButtonHolder").empty();
-        if( termChoice.hasClass('SelClass') )
-        {
-            courseCode = termChoice.attr('name');
-            $( "#ButtonHolder").append( "<br><br><div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' type='button' id='viewInfo'> View Info </button><br><br/> <button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
-
-            // @app.route('/backpack_course/<term>/<school>/<subject>/<course_num>')
-            var url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
-            $('#addClass').bind('click', function(){
-                $.getJSON(url, function(){});
-                alert("Class Added!");
-                refreshCals();
-                updateTable();
-            });
-
-            $('#viewInfo').bind('click', function(){
-              alert("ViewClass")
-            });
-        }
+      currentPanel.find('.TermItem').removeClass('active');
+      currentPanel.nextAll('.panel').find('.TermItem').removeClass('active');
+      termChoice.addClass('active');
 
 
-        if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active')    ){
+      //Ajax requests
+      if( termChoice.hasClass('SelTerm') )
+      {
+          $( "#SchoolHeader").empty();
+          $( "#SubjectHolder").empty();
+          $( "#ClassHolder").empty();
+          $( "#SubjectHeader").empty();
+          $( "#ClassHeader").empty();
+          $( "#SchoolHeader").append("<strong> Select School </strong>");
 
-            numMorePanels = $(panelToActivate).nextAll('.panel').length;
+      	termCode = termChoice.attr('name');
+      	$( "#SchoolHolder").empty();
+          var url = "{{ config['api_url'] }}/get_schools?term_code=" + termChoice.attr('name');
+          $.getJSON( url, function( jsonData ) {
+              var items = [];
+              $.each( jsonData, function( key, obj ) {
+                  //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
+                  items.push( "<div class='TermItem SelSchool' name='" + obj.SchoolCode + "' <p>" + obj.SchoolDescr + " </p></div>"  );
+              });
 
-            if ( $(panelToActivate).hasClass('FinalStage') )
+              //$( "#SchoolHolder").append("<strong> Select School </strong><br><br/>");
+              $( "#SchoolHolder").append( items );
+          });
+
+      } else if( termChoice.hasClass('SelSchool') ) {
+          $( "#SubjectHeader").empty();
+          $( "#ClassHeader").empty();
+          $( "#ClassHolder").empty();
+          $( "#SubjectHeader").append("<strong> Select Subject </strong>");
+
+      	schoolCode = termChoice.attr('name');
+      	$( "#SubjectHolder").empty();
+      	var url = "{{ config['api_url'] }}/get_subjects?term_code=" + termCode + "&school=" + schoolCode;
+          $.getJSON( url, function( jsonData ) {
+              var items = [];
+              $.each( jsonData, function( key, obj ) {
+                  //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
+                  items.push( "<div class='TermItem SelSubject' name='" + obj.SubjectCode + "' <p> (" + obj.SubjectShortDescr + ") " + obj.SubjectDescr + " </p></div>"  );
+              });
+
+              $( "#SubjectHolder").append( items );
+          });
+
+      } else if( termChoice.hasClass('SelSubject') ) {
+          $( "#ClassHeader").empty();
+          $( "#ClassHeader").append("<strong> Select Class </strong>");
+
+      	subjectCode = termChoice.attr('name');
+      	$( "#ClassHolder").empty();
+      	var url = "{{ config['api_url'] }}/get_catalog_numbers?term_code=" + termCode + "&school=" + schoolCode + "&subject=" + subjectCode;
+          $.getJSON( url, function( jsonData ) {
+              var items = [];
+              $.each( jsonData, function( key, obj ) {
+                  //items.push( "<li id='" + obj.SchoolCode + "'>" + obj.SchoolDescr + "</li>" );
+                  items.push( "<div class='TermItem SelClass' name='" + obj.CatalogNumber + "' <p> (" + obj.CatalogNumber + ") " + obj.CourseDescr + " </p></div>"  );
+              });
+
+              $( "#ClassHolder").append( items );
+
+              if( items.length <= 0 )
+              {
+              	$( "#ClassHolder").append( "<p> This subject has no classes this term :( </p>" );
+              }
+          });
+      }
+
+      $( "#ButtonHolder").empty();
+      if( termChoice.hasClass('SelClass') )
+      {
+          courseCode = termChoice.attr('name');
+          $( "#ButtonHolder").append( "<br><br><div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' type='button' id='viewInfo'> View Info </button><br><br/> <button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
+
+          // @app.route('/backpack_course/<term>/<school>/<subject>/<course_num>')
+          var url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
+          $('#addClass').bind('click', function(){
+              $.getJSON(url, function(){});
+              alert("Class Added!");
+              refreshCals();
+              updateTable();
+          });
+
+          $('#viewInfo').bind('click', function(){
+            alert("ViewClass")
+          });
+      }
+
+
+      if( !currentPanel.hasClass('FinalStage') && !$(panelToActivate).is('.active')    ){
+
+          numMorePanels = $(panelToActivate).nextAll('.panel').length;
+
+          if ( $(panelToActivate).hasClass('FinalStage') )
+          {
+          	//animate all previous panels to normal width
+            $(panelToActivate).prevAll('.panel').animate({width: "15%"}, 300);
+            $(panelToActivate).prev('.panel').animate({width: "25%"}, 120);
+
+            //animate the main panel to full size for selection
+            $(panelToActivate).animate({width: "30%"}, 300);
+          }
+          else
+          {
+
+            //animate all previous panels to normal width
+            $(panelToActivate).prevAll('.panel').animate({width: "15%"}, 300);
+
+
+            //animate all the rest of the panels (ones that come after) to small width
+            $(panelToActivate).nextAll('.panel').animate({width: "5%"}, 300);
+            //animate the main panel to full size for selection
+            $(panelToActivate).animate({width: "39.9%"}, 300);
+
+            for(i = 0; i < numMorePanels; i++)
             {
-            	//animate all previous panels to normal width
-	            $(panelToActivate).prevAll('.panel').animate({width: "15%"}, 300);
-	            $(panelToActivate).prev('.panel').animate({width: "25%"}, 120);
-
-	            //animate the main panel to full size for selection
-	            $(panelToActivate).animate({width: "30%"}, 300);
+                $(panelToActivate).animate({width: "+=10%"}, 120);
             }
-            else
-            {
-
-	            //animate all previous panels to normal width
-	            $(panelToActivate).prevAll('.panel').animate({width: "15%"}, 300);
-
-
-	            //animate all the rest of the panels (ones that come after) to small width
-	            $(panelToActivate).nextAll('.panel').animate({width: "5%"}, 300);
-	            //animate the main panel to full size for selection
-	            $(panelToActivate).animate({width: "39.9%"}, 300);
-
-	            for(i = 0; i < numMorePanels; i++)
-	            {
-	                $(panelToActivate).animate({width: "+=10%"}, 120);
-	            }
-	        }
-          //no longer active
-          $('#accordion .panel').removeClass('active');
-          //set active to the selection
-          $(panelToActivate).addClass('active');
-          //(Depricated)
-          activePanel = $(panelToActivate);
-        };
-    });
+        }
+        //no longer active
+        $('#accordion .panel').removeClass('active');
+        //set active to the selection
+        $(panelToActivate).addClass('active');
+        //(Depricated)
+        activePanel = $(panelToActivate);
+      };
+  });
 });
 </script>
 

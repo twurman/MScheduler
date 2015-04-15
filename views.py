@@ -44,6 +44,20 @@ def backpack_course(term, school, subject, course_num):
 
     return ''
 
+@app.route('/backpack_course/delete/<term>/<school>/<subject>/<course_num>')
+def delete_backpack_item(term, school, subject, course_num):
+
+    if not 'backpack' in session:
+        return ''
+
+    for item in session['backpack']:
+        if item['course_num'] == course_num and item['subject'] == subject and item['school'] == school:
+        	session['backpack'].remove(item)
+        	print(session['backpack'])
+        	return ''
+
+    return ''
+
 @app.route('/backpack')
 def getbackpack():
 	return json.dumps(session['backpack'])
