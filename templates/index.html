@@ -49,20 +49,56 @@
     </div>
 </div>
 
-<div class="panel2" id="Viewer">
-  <div class = "pink dark3"></div>
-  <div id="ViewInfo" class="panel1Content">
-    <div id="GlobalFilterHeader" class="GlobalHeader"> FILTERS</div>
-    <div id="GlobalFilters" class="GlobalFilters">
-      <div id ="earliestClass" class="filter">Choose Earliest Start Time:</div>
-      <div id ="lastClass" class="filter"> Choose Latest End Time:</div>
-      <div id ="blockDay" class="filter"> Days of the week with no class:</div>
-    </div>
-  </div>
-</div>
 
 <div class="container" id="backpack_table"></div>
 <br>
+
+<div id="Viewer">
+  <div id="ViewInfo" class="FiltersHolder">
+    <div id="GlobalFilterHeader" class="GlobalHeader"> FILTERS</div>
+    <div id="GlobalFilters" class="GlobalFilters">
+      <div id ="earliestClass" class="filter1">Choose Earliest Start Time:
+        <br>
+        <select>
+          <option value="8" selected="selected">8am</option>
+          <option value="9">9am</option>
+          <option value="10">10am</option>
+          <option value="11">11am</option>
+          <option value="12">Noon</option>
+          <option value="13">1pm</option>
+          <option value="14">2pm</option>
+          <option value="15">3pm</option>
+          <option value="16">4pm</option>
+          <option value="17">5pm</option>
+        </select>
+      </div>
+      <div id ="lastClass" class="filter1"> Choose Latest End Time:
+        <br>
+        <select>
+            <option value="11">11am</option>
+            <option value="12">Noon</option>
+            <option value="13">1pm</option>
+            <option value="14">2pm</option>
+            <option value="15">3pm</option>
+            <option value="16">4pm</option>
+            <option value="17">5pm</option>
+            <option value="18">6pm</option>
+            <option value="19">7pm</option>
+            <option value="20">8pm</option>
+            <option value="21" selected="selected">9pm</option>
+          </select>
+      </div>
+      <div id ="blockDay" class="filter2"> Try to have no class on:
+        <br>
+        <input type="checkbox" name="chk_group[]" value="monday" />Monday<br />
+        <input type="checkbox" name="chk_group[]" value="tuesday" />Tuesday<br />
+        <input type="checkbox" name="chk_group[]" value="wednesday" />Wednesday<br />
+        <input type="checkbox" name="chk_group[]" value="monday" />Thursday<br />
+        <input type="checkbox" name="chk_group[]" value="tuesday" />Friday<br />
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id='calendarHolder'>
   <div id='calendar1' class="calendar"></div>
