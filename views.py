@@ -51,7 +51,7 @@ def getbackpack():
 @app.route('/get_schedules')
 def get_scheds():
     current_week = datetime.today()
-    current_week = current_week.replace(hour=9,minute=30)
+    current_week = current_week.replace(day=(current_week.day - current_week.weekday()),hour=9,minute=30)
 
     test_events = [
         {
