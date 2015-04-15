@@ -49,13 +49,13 @@
     </div>
 </div>
 
-
-<div class="container" id="backpack_table"></div>
+<br>
+<div id="backpack_table"></div>
 <br>
 
 <div id="Viewer">
   <div id="ViewInfo" class="FiltersHolder">
-    <div id="GlobalFilterHeader" class="GlobalHeader"> FILTERS</div>
+    <div id="GlobalFilterHeader" class="GlobalHeader">FILTERS</div>
     <div id="GlobalFilters" class="GlobalFilters">
       <div id ="earliestClass" class="filter1">Choose Earliest Start Time:
         <br>
@@ -156,7 +156,7 @@ function updateTable(){
   var url = "/backpack";
   $.getJSON( url, function( jsonData ) 
   {
-      var html = "<table class='table table-striped' style='background-color:white; align:center'>" 
+      var html = "<table class='table table-striped' style='background-color:white; width:100%; margin:0px'>" 
       + "<thead> <th width='80%'>Course</th> <th width='10%'>Edit</th> <th width='10%'>Delete</th> </thead> <tbody>";
       var items = [];
       var i = 0;
