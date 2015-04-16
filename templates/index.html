@@ -264,7 +264,7 @@ function updateTable(){
         // }
         var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
         console.log(deleteURL);
-        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) {} ); refreshCals(); updateTable();";
+        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { refreshCals(); updateTable(); } );";
         console.log(deleteFunc);
 
         //create new row in table
@@ -395,18 +395,18 @@ $(document).ready(function(){
           // $( "#ButtonHolder").append(url);
 
           $.getJSON( url, function( jsonData ) {
-              $( "#ButtonHolder").append("<div style='width: 94%; margin-left: 3%; margin-right: 3%;'><p class='lead' style='font-size: 14px;'>" + jsonData + "</p></div>");
+              $( "#ButtonHolder").append("<div style='width: 94%; margin-left: 3%; margin-right: 3%;'><p class='lead' style='font-size: 16px;'>" + jsonData + "</p></div>");
               $( "#ButtonHolder").append( "<div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
-          });
-          
 
-          url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
-          $('#addClass').bind('click', function(){
-              $.getJSON(url, function(){});
-              alert("Class Added!");
-              refreshCals();
-              updateTable();
+              url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
+              $('#addClass').bind('click', function(){
+                  $.getJSON(url, function(){});
+                  alert("Class Added!");
+                  refreshCals();
+                  updateTable();
+              });
           });
+                    
       }
 
 
