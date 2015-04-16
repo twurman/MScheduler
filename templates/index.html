@@ -146,7 +146,7 @@ function onFilterChange()
   $.each($("input[name='chk_group[]']:checked"), function() {
     skipDayVals.push($(this).val());
   });
-  console.log(skipDayVals);
+  // console.log(skipDayVals);
 
   var mon = skipDayVals.indexOf("0") > -1;
   var tues = skipDayVals.indexOf("1") > -1;
@@ -192,10 +192,10 @@ function refreshCals(){
         for( var j = 0; j < obj.length; j++ )
         {
           var tempDate = (moment(obj[j].start)).toDate();
-          console.log("Temp is at:" + tempDate);
+          // console.log("Temp is at:" + tempDate);
           tempDate.setDate(earlyStart.getDate());
 
-          console.log("Early is at:" + earlyStart);
+          // console.log("Early is at:" + earlyStart);
 
           if( earlyStart > tempDate )
           {
@@ -232,7 +232,7 @@ function refreshCals(){
           events:obj
         });
 
-        console.log(obj);
+        // console.log(obj);
 
         //increment i
         i = i+1;
@@ -373,19 +373,35 @@ $(document).ready(function(){
       if( termChoice.hasClass('SelClass') )
       {
           courseCode = termChoice.attr('name');
-          $( "#ButtonHolder").append( "<br><br><div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' type='button' id='viewInfo'> View Info </button><br><br/> <button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
 
-          // @app.route('/backpack_course/<term>/<school>/<subject>/<course_num>')
-          var url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
+          var url = "{{ config['api_url'] }}/get_course_description?term_code=" + termCode + "&school=" + schoolCode + "&subject=" + subjectCode + "&catalog_num=" + courseCode;
+
+          var courseDescription = 'testing';
+          $( "#ButtonHolder").append(url);
+
+          $.getJSON( url, function( jsonData ) {
+              $( "#ButtonHolder").append(jsonData);
+          });
+          
+
+          // TESTING
+          // $( "#ButtonHolder").append(termCode);
+          // $( "#ButtonHolder").append(schoolCode);
+          // $( "#ButtonHolder").append(subjectCode);
+          // $( "#ButtonHolder").append(courseCode);
+          // $( "#ButtonHolder").append(url);
+
+
+          // $("#ButtonHolder").append(courseDescription);
+          
+          $( "#ButtonHolder").append( "<br><br><div style='text-align:center' class='col-sm-8 col-sm-offset-2'><br><br/> <button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
+
+          url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
           $('#addClass').bind('click', function(){
               $.getJSON(url, function(){});
               alert("Class Added!");
               refreshCals();
               updateTable();
-          });
-
-          $('#viewInfo').bind('click', function(){
-            alert("ViewClass")
           });
       }
 
