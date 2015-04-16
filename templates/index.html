@@ -443,16 +443,20 @@ $(document).ready(function(){
               $( "#ButtonHolder").append("<div style='width: 94%; margin-left: 3%; margin-right: 3%;'><p class='lead' style='font-size: 16px;'>" + jsonData + "</p></div>");
 
               url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
-              $( "#ButtonHolder").append( "<div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' id='addClass' onclick=\"" 
-                + "$.getJSON('" + url + "', function( jsonData ){ }); alert('Class Added'); updateTable(); refreshCals();\"> Add Class </button></div>");
+              $( "#ButtonHolder").append( "<div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' id='addClass' "
+                // + "onclick=\"" 
+                // + "$.getJSON('" + url + "', function( jsonData ){ }); alert('Class Added'); updateTable(); refreshCals();\""
+                + "> Add Class </button></div>");
 
               
-              // $('#addClass').bind('onclick', function(){
-              //     $.getJSON(url, function( jsonData ){
-              //       updateTable();
-              //       refreshCals();
-              //     });
-              // });
+              $('#addClass').bind('click', function(){
+                 $.get(url, function(){ 
+                  // alert('Class Added');
+                 updateTable();
+                 refreshCals();
+                 });
+                 
+              });
           });
                     
       }
