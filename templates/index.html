@@ -185,56 +185,62 @@ function refreshCals(){
       earlyStart.setHours(23);
       lateEnd.setHours(2);
       $.each( jsonData, function( key, obj ) {
-        //create new calendar div
-        $( "#calendarHolder").append( "<div id='calendar" + i + "' class='calendar'</div>" );
 
-        for( var j = 0; j < obj.length; j++ )
+        if( obj.length > 0 )
         {
-          var tempDate = (moment(obj[j].start)).toDate();
-          // console.log("Temp is at:" + tempDate);
-          tempDate.setDate(earlyStart.getDate());
 
-          // console.log("Early is at:" + earlyStart);
+          //create new calendar div
+          $( "#calendarHolder").append( "<div id='calendar" + i + "' class='calendar'</div>" );
 
-          if( earlyStart > tempDate )
+          for( var j = 0; j < obj.length; j++ )
           {
-            earlyStart.setHours(tempDate.getHours());
+            var tempDate = (moment(obj[j].start)).toDate();
+            // console.log("Temp is at:" + tempDate);
+            tempDate.setDate(earlyStart.getDate());
+
+            // console.log("Early is at:" + earlyStart);
+
+            if( earlyStart > tempDate )
+            {
+              earlyStart.setHours(tempDate.getHours());
+            }
+
+            var tempEnd = (moment(obj[j].end)).toDate();
+            tempEnd.setDate(lateEnd.getDate());
+
+            if( lateEnd < tempEnd )
+            {
+              lateEnd.setHours(tempEnd.getHours()+1);
+            }
+
           }
 
-          var tempEnd = (moment(obj[j].end)).toDate();
-          tempEnd.setDate(lateEnd.getDate());
+          var minTimeString = earlyStart.getHours() + ":00:00";
+          var maxTimeString = lateEnd.getHours() + ":00:00";
 
-          if( lateEnd < tempEnd )
+
+          //create calendar for this div
+          var calendar = $('#calendar' + i).fullCalendar(
           {
-            lateEnd.setHours(tempEnd.getHours()+1);
-          }
+            header:false,
+            defaultView: 'agendaWeek',
+            selectable: false,
+            selectHelper: false,
+            editable: false,
+            allDaySlot:false,
+            weekends:false,
+            height: "auto",
+            columnFormat: 'ddd',
+            minTime: minTimeString,
+            maxTime: maxTimeString,
+            events:obj
+          });
 
+          // console.log(obj);
+
+          //increment i
+          i = i+1;
         }
-
-        var minTimeString = earlyStart.getHours() + ":00:00";
-        var maxTimeString = lateEnd.getHours() + ":00:00";
-
-        //create calendar for this div
-        var calendar = $('#calendar' + i).fullCalendar(
-        {
-          header:false,
-          defaultView: 'agendaWeek',
-          selectable: false,
-          selectHelper: false,
-          editable: false,
-          allDaySlot:false,
-          weekends:false,
-          height: "auto",
-          columnFormat: 'ddd',
-          minTime: minTimeString,
-          maxTime: maxTimeString,
-          events:obj
-        });
-
-        // console.log(obj);
-
-        //increment i
-        i = i+1;
       });
   });
   $( "#calendarHolder").fadeTo('fast',100).slideDown();
