@@ -56,7 +56,7 @@
     <div id="GlobalFilters" class="GlobalFilters">
       <div class="filter1"><strong>Earliest Start Time:</strong>
         <br>
-        <select id="earliestClass" onchange="onFilterChange()">
+        <select id="earliestClass" onchange="onFilterChange()" style="margin-bottom:10px">
           <option value="0" selected="selected">12am</option>
           <option value="1">1am</option>
           <option value="2">2am</option>
@@ -79,7 +79,7 @@
       </div>
       <div class="filter1"><strong>Latest End Time:</strong>
         <br>
-        <select id="lastClass" onchange="onFilterChange()">
+        <select id="lastClass" onchange="onFilterChange()" style="margin-bottom:10px">
             <option value="11">11am</option>
             <option value="12">Noon</option>
             <option value="13">1pm</option>
@@ -97,7 +97,7 @@
       </div>
       <div class="filter1"><strong>Sort Results By:</strong>
         <br>
-        <select id="sortBy" onchange="onFilterChange()">
+        <select id="sortBy" onchange="onFilterChange()" style="margin-bottom:10px">
           <option value="Earliest_Start" selected="selected">Earliest Start</option>
           <option value="Latest_Start">Latest Start</option>
           <option value="Earliest_End">Earliest End</option>
@@ -256,10 +256,23 @@ function updateTable(){
       var items = [];
       var i = 0;
       $.each( jsonData, function( key, obj ) {
+        //create onclick function
+        // function deleteCourse(){
+        //   //@app.route('/backpack_course/delete/<term>/<school>/<subject>/<course_num>')
+        //   var deleteURL = "/backpack_course/delete/" + obj.term + "/" + obj.school + "/" + obj.subject + "/" + obj.course_num;
+        //   $.getJSON( deleteURL, function( jsonData ) {} );
+        // }
+        var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
+        console.log(deleteURL);
+        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) {} ); refreshCals(); updateTable();";
+        console.log(deleteFunc);
+
         //create new row in table
         html += "<tr> <td>" + obj.subject + " " + obj.course_num + "</td>"
           + "<td><button type='button' class='btn btn-warning'>Edit</button></td>"
-          + "<td><button type='button' class='btn btn-danger'>Delete</button></td>"
+          + "<td><button type='button' class='btn btn-danger' "
+          + "onclick=\"" + deleteFunc + "\""
+          + ">Delete</button></td>"
           + "</tr>";
 
 
