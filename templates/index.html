@@ -304,7 +304,7 @@ function updateTable(){
         //   $.getJSON( deleteURL, function( jsonData ) {} );
         // }
         var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
-        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { } ); alert('Class Removed'); refreshCals(); updateTable();";        
+        var deleteFunc = "$.get(\'" + deleteURL + "\' , function( ) { refreshCals(); updateTable(); $( '#editCourse').empty(); $( '#editCourse').append('<strong>Click Edit To Filter Backpacked Courses</strong>'); } ); ";       
 
         //create new row in table
         html += "<tr> <td>" + obj.subject + " " + obj.course_num + "</td>"
