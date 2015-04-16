@@ -385,29 +385,20 @@ $(document).ready(function(){
       $( "#ButtonHolder").empty();
       if( termChoice.hasClass('SelClass') )
       {
+          $( "#ButtonHeader").empty();
+          $( "#ButtonHeader").append("<strong> Course Description </strong>");
           courseCode = termChoice.attr('name');
 
           var url = "{{ config['api_url'] }}/get_course_description?term_code=" + termCode + "&school=" + schoolCode + "&subject=" + subjectCode + "&catalog_num=" + courseCode;
 
           var courseDescription = 'testing';
-          $( "#ButtonHolder").append(url);
-
-          $.getJSON( url, function( jsonData ) {
-              $( "#ButtonHolder").append(jsonData);
-          });
-          
-
-          // TESTING
-          // $( "#ButtonHolder").append(termCode);
-          // $( "#ButtonHolder").append(schoolCode);
-          // $( "#ButtonHolder").append(subjectCode);
-          // $( "#ButtonHolder").append(courseCode);
           // $( "#ButtonHolder").append(url);
 
-
-          // $("#ButtonHolder").append(courseDescription);
+          $.getJSON( url, function( jsonData ) {
+              $( "#ButtonHolder").append("<div style='width: 94%; margin-left: 3%; margin-right: 3%;'><p class='lead' style='font-size: 14px;'>" + jsonData + "</p></div>");
+              $( "#ButtonHolder").append( "<div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
+          });
           
-          $( "#ButtonHolder").append( "<br><br><div style='text-align:center' class='col-sm-8 col-sm-offset-2'><br><br/> <button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
 
           url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
           $('#addClass').bind('click', function(){
