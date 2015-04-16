@@ -117,8 +117,7 @@
 </div>
 
 <div id='calendarHolder'>
-  <div id='calendar1' class="calendar"></div>
-  <div id='calendar2' class="calendar"></div>
+  
 </div>
 
 <script>
@@ -185,8 +184,8 @@ function refreshCals(){
       earlyStart.setHours(23);
       lateEnd.setHours(2);
       $.each( jsonData, function( key, obj ) {
-
         //create new calendar div
+        console.log(obj);
         $( "#calendarHolder").append( "<div id='calendar" + i + "' class='calendar'</div>" );
 
         for( var j = 0; j < obj.length; j++ )
@@ -252,7 +251,7 @@ function updateTable(){
   $.getJSON( url, function( jsonData ) 
   {
       var html = "<table class='table table-striped' style='background-color:white; width:100%; margin:0px'>" 
-      + "<thead> <th width='80%'>Course</th> <th width='10%'>Edit</th> <th width='10%'>Remove</th> </thead> <tbody>";
+      + "<thead> <th width='80%'>Backpacked Courses</th> <th width='10%'>Edit</th> <th width='10%'>Remove</th> </thead> <tbody>";
       var items = [];
       var i = 0;
       $.each( jsonData, function( key, obj ) {
@@ -263,9 +262,7 @@ function updateTable(){
         //   $.getJSON( deleteURL, function( jsonData ) {} );
         // }
         var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
-        console.log(deleteURL);
         var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { } ); alert('Class Removed'); refreshCals(); updateTable();";
-        console.log(deleteFunc);
 
         //create new row in table
         html += "<tr> <td>" + obj.subject + " " + obj.course_num + "</td>"

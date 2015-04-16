@@ -108,11 +108,11 @@ def get_scheds():
             for meeting in course['meetings']:
                 option.append({
                     'id': 0,
-                    'title': ' '.join((course['subject'],course['course_num'],course['course_num'])),
+                    'title': ' '.join((course['subject'],course['course_num'])),
                     'allDay': False,
                     'start': meeting[0].isoformat(),
                     'end': meeting[1].isoformat(),
-                    'backgroundColor': '#E60000',
+                    'backgroundColor': '#000000',
                 })
         ret.append(option)
 
