@@ -59,9 +59,9 @@ def delete_backpack_item(subject, course_num):
 
     return ''
 
-@app.route('/backpack')
-def getbackpack():
-	return json.dumps(session['backpack'])
+@app.route('/get_session/<key>')
+def get_session(key):
+	return json.dumps(session[key])
 
 @app.route('/clear_backpack')
 def clear_backpack():
