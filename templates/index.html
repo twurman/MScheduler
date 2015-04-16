@@ -172,7 +172,7 @@ function greaterTime(first, second) {
 
 function refreshCals(){
 
-  $( "#calendarHolder").fadeTo('slow',0).slideUp(function() {
+  $( "#calendarHolder").fadeTo('slow',0).slideUp('slow',function() {
     $("#calendarHolder").empty();
 
     var url = "/get_schedules";
@@ -240,6 +240,10 @@ function refreshCals(){
 
           //increment i
           i = i+1;
+        } // end if for calendars showing
+        else
+        {
+          $( "#calendarHolder").append( "<div class='calendar' style='text-align:center;margin-left:27%;margin-right:30%;'> No Calendars could be created. Please Try Different Combinations </div>" );
         }
       });
   });
