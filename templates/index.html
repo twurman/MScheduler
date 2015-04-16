@@ -276,7 +276,7 @@ function updateTable(){
 
   $( "#backpack_table").empty();
 
-  var url = "/backpack";
+  var url = "/get_session/backpack";
   $.getJSON( url, function( jsonData ) 
   {
       var html = "<table class='table table-striped' style='background-color:white; width:100%; margin:0px'>" 
@@ -291,9 +291,7 @@ function updateTable(){
         //   $.getJSON( deleteURL, function( jsonData ) {} );
         // }
         var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
-        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { } ); alert('Class Removed'); refreshCals(); updateTable();";
-
-        console.log(obj.school);
+        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { } ); alert('Class Removed'); refreshCals(); updateTable();";        
 
         //create new row in table
         html += "<tr> <td>" + obj.subject + " " + obj.course_num + "</td>"
@@ -307,6 +305,8 @@ function updateTable(){
 
 
       });
+      
+      console.log("updateTable");
 
       html += "</tbody><tfoot><tr><td></td><td></td><td></td></tr></tfoot></table>";
       $( "#backpack_table").append(html);
@@ -431,11 +431,11 @@ $(document).ready(function(){
               $( "#ButtonHolder").append( "<div style='text-align:center' class='col-sm-8 col-sm-offset-2'><button class='btn btn-primary btn-large btn-block' id='addClass'> Add Class </button></div>");
 
               url='/backpack_course/' + termCode + '/' + schoolCode + '/' + subjectCode + '/' + courseCode;
-              $('#addClass').bind('click', function(){
-                  $.getJSON(url, function(){});
-                  alert("Class Added!");
-                  refreshCals();
-                  updateTable();
+              $('#addClass').bind('onclick', function(){
+                  $.getJSON(url, function( jsonData ){
+                    updateTable();
+                    refreshCals();
+                  });
               });
           });
                     
