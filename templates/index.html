@@ -112,6 +112,14 @@
         <input type="checkbox" name="chk_group[]" value="3" onclick="onFilterChange()" />Thursday<br />
         <input type="checkbox" name="chk_group[]" value="4" onclick="onFilterChange()" />Friday<br />
       </div>
+      <div id ="editCourse" class="filter2"> <strong>Edit Course</strong>
+        <br>
+        <input type="checkbox" name="chk_group[]" value="0" onclick="onFilterChange()" />Monday<br />
+        <input type="checkbox" name="chk_group[]" value="1" onclick="onFilterChange()" />Tuesday<br />
+        <input type="checkbox" name="chk_group[]" value="2" onclick="onFilterChange()" />Wednesday<br />
+        <input type="checkbox" name="chk_group[]" value="3" onclick="onFilterChange()" />Thursday<br />
+        <input type="checkbox" name="chk_group[]" value="4" onclick="onFilterChange()" />Friday<br />
+      </div>
     </div>
   </div>
 </div>
@@ -185,7 +193,6 @@ function refreshCals(){
       lateEnd.setHours(2);
       $.each( jsonData, function( key, obj ) {
         //create new calendar div
-        console.log(obj);
         $( "#calendarHolder").append( "<div id='calendar" + i + "' class='calendar'</div>" );
 
         for( var j = 0; j < obj.length; j++ )
