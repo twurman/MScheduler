@@ -48,12 +48,13 @@
 
 <br>
 <div id="backpack_table"></div>
-<br>
+<br> 
 
-<div id="Viewer">
-  <div id="ViewInfo" class="FiltersHolder">
-    <div id="GlobalFilterHeader" class="GlobalHeader"><strong>FILTERS</strong></div>
+<div class="Viewer">
+  <!-- <div id="ViewInfo" class="FiltersHolder"> -->
+    <!-- <div id="GlobalFilterHeader" class="GlobalHeader"><strong>FILTERS</strong></div> -->
     <div id="GlobalFilters" class="GlobalFilters">
+      <div id ="editCourse" class="filter2"><strong>Click Edit To Filter Backpacked Courses</strong></div>
       <div class="filter1"><strong>Earliest Start Time:</strong>
         <br>
         <select id="earliestClass" onchange="onFilterChange()" style="margin-bottom:10px">
@@ -112,16 +113,8 @@
         <input type="checkbox" name="chk_group[]" value="3" onclick="onFilterChange()" />Thursday<br />
         <input type="checkbox" name="chk_group[]" value="4" onclick="onFilterChange()" />Friday<br />
       </div>
-      <div id ="editCourse" class="filter2"> <strong>Edit Course</strong>
-        <br>
-        <input type="checkbox" name="chk_group[]" value="0" onclick="onFilterChange()" />Monday
-        <input type="checkbox" name="chk_group[]" value="1" onclick="onFilterChange()" />Tuesday
-        <input type="checkbox" name="chk_group[]" value="2" onclick="onFilterChange()" />Wednesday
-        <input type="checkbox" name="chk_group[]" value="3" onclick="onFilterChange()" />Thursday
-        <input type="checkbox" name="chk_group[]" value="4" onclick="onFilterChange()" />Friday
-      </div>
     </div>
-  </div>
+  <!-- </div> -->
 </div>
 
 <div id='calendarHolder'>
@@ -250,6 +243,25 @@ function refreshCals(){
   
 }
 
+function updateEditCourse(term, school, subject, course_num){
+  $( "#editCourse").empty();
+
+  var url = "http://umich-schedule-api.herokuapp.com/get_sections?term_code=" + String(term) 
+            + "&school=" + String(school) + "&subject=" + String(subject) + "&catalog_num=" + String(course_num);
+  $.getJSON( url, function( jsonData ) 
+  {
+      var i = 0;
+      $( "#editCourse").append("<strong>Edit " + subject + " " + course_num + "</strong><br>");
+      $.each( jsonData, function( key, obj ) {
+          $( "#editCourse").append("<div class='col-sm-4'><input type='checkbox' checked name='chk_group2[]' value='" + i + "' onclick='onFilterChange()' />"
+            + obj.SectionType + " " + obj.SectionNumber + ": " + obj.Meeting.Days + " " + obj.Meeting.Times + "</div>");
+          i = i + 1;
+      });
+
+  });
+
+}
+
 function updateTable(){
 
   $( "#backpack_table").empty();
@@ -271,9 +283,13 @@ function updateTable(){
         var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
         var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { } ); alert('Class Removed'); refreshCals(); updateTable();";
 
+        console.log(obj.school);
+
         //create new row in table
         html += "<tr> <td>" + obj.subject + " " + obj.course_num + "</td>"
-          + "<td><button type='button' class='btn btn-warning'>Edit</button></td>"
+          + "<td><button type='button' class='btn btn-warning'"
+          +"onclick=\"updateEditCourse('" + obj.term + "', '" + obj.school + "', '" + obj.subject 
+          + "', '" + obj.course_num + "');\">Edit</button></td>"
           + "<td><button type='button' class='btn btn-danger' "
           + "onclick=\"" + deleteFunc + "\""
           + ">Remove</button></td>"
@@ -287,7 +303,6 @@ function updateTable(){
   });
   
 }
-
 
 
 $(document).ready(function(){
@@ -328,6 +343,7 @@ $(document).ready(function(){
           $( "#ClassHolder").empty();
           $( "#SubjectHeader").empty();
           $( "#ClassHeader").empty();
+          $( "#ButtonHeader").empty();
           $( "#SchoolHeader").append("<strong> Select School </strong>");
 
       	termCode = termChoice.attr('name');
@@ -348,6 +364,7 @@ $(document).ready(function(){
           $( "#SubjectHeader").empty();
           $( "#ClassHeader").empty();
           $( "#ClassHolder").empty();
+          $( "#ButtonHeader").empty();
           $( "#SubjectHeader").append("<strong> Select Subject </strong>");
 
       	schoolCode = termChoice.attr('name');
@@ -365,6 +382,7 @@ $(document).ready(function(){
 
       } else if( termChoice.hasClass('SelSubject') ) {
           $( "#ClassHeader").empty();
+          $( "#ButtonHeader").empty();
           $( "#ClassHeader").append("<strong> Select Class </strong>");
 
       	subjectCode = termChoice.attr('name');
