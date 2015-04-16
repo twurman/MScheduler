@@ -157,10 +157,23 @@ function updateTable(){
       var items = [];
       var i = 0;
       $.each( jsonData, function( key, obj ) {
+        //create onclick function
+        // function deleteCourse(){
+        //   //@app.route('/backpack_course/delete/<term>/<school>/<subject>/<course_num>')
+        //   var deleteURL = "/backpack_course/delete/" + obj.term + "/" + obj.school + "/" + obj.subject + "/" + obj.course_num;
+        //   $.getJSON( deleteURL, function( jsonData ) {} );
+        // }
+        var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
+        console.log(deleteURL);
+        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) {} ); refreshCals(); updateTable();";
+        console.log(deleteFunc);
+
         //create new row in table
         html += "<tr> <td>" + obj.subject + " " + obj.course_num + "</td>"
           + "<td><button type='button' class='btn btn-warning'>Edit</button></td>"
-          + "<td><button type='button' class='btn btn-danger'>Delete</button></td>"
+          + "<td><button type='button' class='btn btn-danger' "
+          + "onclick=\"" + deleteFunc + "\""
+          + ">Delete</button></td>"
           + "</tr>";
 
 
