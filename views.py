@@ -19,12 +19,21 @@ def index():
 
     return render_template('index.html', **options)
 
+def has_assigned_sections(sections):
+    for section in sections:
+        if 'Meeting' in section and section['Meeting']['Days']!='TBA' and section['Meeting']['Times']!='TBA':
+            return True
+    return False
+
 @app.route('/backpack_course/<term>/<school>/<subject>/<course_num>')
 def backpack_course(term, school, subject, course_num):
 
     if not 'backpack' in session:
         backpack = []
         session['backpack'] = backpack
+
+    if not has_assigned_sections(get_sections(term,school,subject,course_num)):
+        return 'Class has no assigned sections', 400
 
     backpack_item = {}
     backpack_item['term'] = term
