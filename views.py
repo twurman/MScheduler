@@ -71,7 +71,7 @@ def clear_backpack():
 
 API_DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 colors = ["#43735D", "#B8CA0C", "#1D3833", "#626589", "#ddaa44"];
-#light green, lime green, dark green, lavender-grey, gold
+NUM_RET = 6
 
 @app.route('/get_schedules')
 def get_scheds():
@@ -102,13 +102,11 @@ def get_scheds():
         to_backpack.append( sections )
 
     ret = []
-    
-    modder = 0
 
     options = list(itertools.product(*to_backpack))
-    for i in options[0:5]:
+    for i in options[0:NUM_RET]:
         option = []
-        for course in i:
+        for modder, course in enumerate(i):
             for meeting in course['meetings']:
                 option.append({
                     'id': 0,
@@ -116,19 +114,9 @@ def get_scheds():
                     'allDay': False,
                     'start': meeting[0].isoformat(),
                     'end': meeting[1].isoformat(),
-                    'backgroundColor': colors[modder % 5],
+                    'backgroundColor': colors[modder % NUM_RET],
                 })
-            modder = modder + 1    
         ret.append(option)
-        modder = 0
-
-
-    # options = []
-    # for i in itertools.product(*to_backpack):
-    #     option = []
-    #     for c in i:
-    #         option.append(' '.join((c['subject'], c['course_num'], c['SectionNumber'])))
-    #     options.append(option)
 
     return json.dumps(ret,indent=4, separators=(',', ': '))
 
