@@ -57,37 +57,37 @@ def get_subjects(term, school):
     return get_data('/get_subjects?term_code=' + term + '&school=' + school)
 
 def get_catalog_numbers(term, school, subject):
-    
+
     return get_data('/get_catalog_numbers?term_code=' + term + '&school=' + school + '&subject=' + subject)
 
 def get_course_description(term, school, subject, catalog_num):
-    
-    return get_data('/get_course_description?term_code=' + term + '&school=' + school 
+
+    return get_data('/get_course_description?term_code=' + term + '&school=' + school
                         + '&subject=' + subject + '&catalog_num=' + catalog_num)
 
-def get_sections(term, school, subject, catalog_num):
-    
-    return get_data('/get_sections?term_code=' + term + '&school=' + school 
-                        + '&subject=' + subject + '&catalog_num=' + catalog_num)
+def get_sections(term, school, subject, course_num):
+
+    return get_data('/get_sections?term_code=' + term + '&school=' + school
+                        + '&subject=' + subject + '&catalog_num=' + course_num)
 
 def get_section_details(term, school, subject, catalog_num, section_num):
-    
-    return get_data('/get_sections?term_code=' + term + '&school=' + school + '&subject=' + subject 
+
+    return get_data('/get_sections?term_code=' + term + '&school=' + school + '&subject=' + subject
                         + '&catalog_num=' + catalog_num + '&section_num=' + section_num)
 
 def get_meetings(term, school, subject, catalog_num, section_num):
-    
-    return get_data('/get_meetings?term_code=' + term + '&school=' + school + '&subject=' + subject 
+
+    return get_data('/get_meetings?term_code=' + term + '&school=' + school + '&subject=' + subject
                         + '&catalog_num=' + catalog_num + '&section_num=' + section_num)
 
 def get_textbook(term, school, subject, catalog_num, section_num):
-    
-    return get_data('/get_textbooks?term_code=' + term + '&school=' + school + '&subject=' + subject 
+
+    return get_data('/get_textbooks?term_code=' + term + '&school=' + school + '&subject=' + subject
                         + '&catalog_num=' + catalog_num + '&section_num=' + section_num)
 
 def get_instructors(term, school, subject, catalog_num, section_num):
-    
-    return get_data('/get_instructors?term_code=' + term + '&school=' + school + '&subject=' + subject 
+
+    return get_data('/get_instructors?term_code=' + term + '&school=' + school + '&subject=' + subject
                         + '&catalog_num=' + catalog_num + '&section_num=' + section_num)
 
 

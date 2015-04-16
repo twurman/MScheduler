@@ -3,6 +3,7 @@ from app import app
 from schedule_api import *
 from datetime import datetime
 from datetime import timedelta
+import itertools
 
 @app.route('/')
 def index():
@@ -13,7 +14,7 @@ def index():
     if not 'backpack' in session:
 		backpack = []
 		session['backpack'] = backpack
-	
+
     options['backpack'] = session['backpack']
 
     return render_template('index.html', **options)
@@ -62,46 +63,91 @@ def delete_backpack_item(subject, course_num):
 def getbackpack():
 	return json.dumps(session['backpack'])
 
+@app.route('/clear_backpack')
+def clear_backpack():
+    del session['backpack']
+    return ''
+
+
+API_DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+
 @app.route('/get_schedules')
 def get_scheds():
     current_week = datetime.today()
-    current_week = current_week.replace(day=(current_week.day - current_week.weekday()),hour=9,minute=30)
+    current_week = current_week.replace(day=(current_week.day - current_week.weekday()),hour=0,minute=0)
 
-    test_events = [
-        {
-            'id': 0,
-            'title': 'Class 2',
-            'allDay': False,
-            'start': (current_week + timedelta(hours=1)).isoformat(),
-            'end': (current_week + timedelta(hours=3)).isoformat(),
-            'backgroundColor': '#E60000',
-        },
-        {
-            'id': 1,
-            'title': 'Class 2',
-            'allDay': False,
-            'start': (current_week + timedelta(days=2,hours=1)).isoformat(),
-            'end': (current_week + timedelta(days=2,hours=3)).isoformat(),
-            'backgroundColor': '#E60000',
-        },
-        {
-            'id': 2,
-            'title': 'Class 1',
-            'allDay': False,
-            'start': current_week.isoformat(),
-            'end': (current_week + timedelta(hours=1)).isoformat(),
-            'backgroundColor': 'blue',
-        },
-        {
-            'id': 3,
-            'title': 'Class 3',
-            'allDay': False,
-            'start': (current_week + timedelta(days=1,hours=4)).isoformat(),
-            'end': (current_week + timedelta(days=1,hours=6)).isoformat(),
-            'backgroundColor': 'green',
-        },
-    ]
-    return json.dumps([ test_events, test_events, test_events ])
+    options = []
+
+    to_backpack = []
+    for c in session['backpack']:
+        sections = [ dict(s.items()+c.items()) for s in get_sections(**c) ]
+        for section in sections:
+            if 'Meeting' not in section:
+                continue
+            if not isinstance(section['Meeting'], list):
+                section['Meeting'] = [section['Meeting']]
+            meetings = []
+            for meeting in section['Meeting']:
+                days = [meeting['Days'][i:i+2] for i in range(0, len(meeting['Days']), 2)]
+                times = [ time.strptime(i.strip(), "%I:%M%p") for i in meeting['Times'].split('-') ]
+                for day in days:
+                    start = current_week + timedelta(days=API_DAYS.index(day), hours=times[0].tm_hour, minutes=times[0].tm_min)
+                    end   = current_week + timedelta(days=API_DAYS.index(day), hours=times[1].tm_hour, minutes=times[1].tm_min)
+
+                    meetings.append((start,end))
+            section['meetings'] = meetings
+
+        to_backpack.append( sections )
+
+    ret = []
+
+    options = list(itertools.product(*to_backpack))
+    for i in options[0:5]:
+        option = []
+        for course in i:
+            for meeting in course['meetings']:
+                option.append({
+                    'id': 0,
+                    'title': ' '.join((course['subject'],course['course_num'],course['course_num'])),
+                    'allDay': False,
+                    'start': meeting[0].isoformat(),
+                    'end': meeting[1].isoformat(),
+                    'backgroundColor': '#E60000',
+                })
+        ret.append(option)
+
+
+    # options = []
+    # for i in itertools.product(*to_backpack):
+    #     option = []
+    #     for c in i:
+    #         option.append(' '.join((c['subject'], c['course_num'], c['SectionNumber'])))
+    #     options.append(option)
+
+    return json.dumps(ret,indent=4, separators=(',', ': '))
+
+@app.route('/filter/<earliestClass>/<latestEndTime>/<sortBy>/<mon>/<tues>/<wed>/<thurs>/<fri>')
+def send_filters(earliestClass, latestEndTime, sortBy, mon, tues, wed, thurs, fri):
+
+    if not 'filters' in session:
+        filters =[]
+        session['filters'] = filters
+
+    filter_item = {}
+    filter_item['earliestClass'] = earliestClass
+    filter_item['latestEndTime'] = latestEndTime
+    filter_item['sortBy'] = sortBy
+    filter_item['monClass'] = mon
+    filter_item['tuesClass'] = tues
+    filter_item['wedClass'] = wed
+    filter_item['thursClass'] = thurs
+    filter_item['friClass'] = fri
+
+
+    session['filters'] = filter_item
+    print session['backpack']
+
+    return ''
 
 @app.route('/course_description/<term>/<school>/<subject>/<course_num>/<course_title>')
 def course_description(term, school, subject, course_num, course_title):

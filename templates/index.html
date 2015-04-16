@@ -54,10 +54,18 @@
   <div id="ViewInfo" class="FiltersHolder">
     <div id="GlobalFilterHeader" class="GlobalHeader"><strong>FILTERS</strong></div>
     <div id="GlobalFilters" class="GlobalFilters">
-      <div id ="earliestClass" class="filter1"><strong>Choose Earliest Start Time:</strong>
+      <div class="filter1"><strong>Earliest Start Time:</strong>
         <br>
-        <select>
-          <option value="8" selected="selected">8am</option>
+        <select id="earliestClass" onchange="onFilterChange()">
+          <option value="0" selected="selected">12am</option>
+          <option value="1">1am</option>
+          <option value="2">2am</option>
+          <option value="3">3am</option>
+          <option value="4">4am</option>
+          <option value="5">5am</option>
+          <option value="6">6am</option>
+          <option value="7">7am</option>
+          <option value="8">8am</option>
           <option value="9">9am</option>
           <option value="10">10am</option>
           <option value="11">11am</option>
@@ -69,9 +77,9 @@
           <option value="17">5pm</option>
         </select>
       </div>
-      <div id ="lastClass" class="filter1"><strong>Choose Latest End Time:</strong>
+      <div class="filter1"><strong>Latest End Time:</strong>
         <br>
-        <select>
+        <select id="lastClass" onchange="onFilterChange()">
             <option value="11">11am</option>
             <option value="12">Noon</option>
             <option value="13">1pm</option>
@@ -82,16 +90,27 @@
             <option value="18">6pm</option>
             <option value="19">7pm</option>
             <option value="20">8pm</option>
-            <option value="21" selected="selected">9pm</option>
+            <option value="21">9pm</option>
+            <option value="22">10pm</option>
+            <option value="23" selected="selected">11pm</option>
           </select>
+      </div>
+      <div class="filter1"><strong>Sort Results By:</strong>
+        <br>
+        <select id="sortBy" onchange="onFilterChange()">
+          <option value="Earliest_Start" selected="selected">Earliest Start</option>
+          <option value="Latest_Start">Latest Start</option>
+          <option value="Earliest_End">Earliest End</option>
+          <option value="Latest_End">Latest End</option>
+        </select>
       </div>
       <div id ="blockDay" class="filter2"> <strong>I Would Like No Class On:</strong>
         <br>
-        <input type="checkbox" name="chk_group[]" value="monday" />Monday<br />
-        <input type="checkbox" name="chk_group[]" value="tuesday" />Tuesday<br />
-        <input type="checkbox" name="chk_group[]" value="wednesday" />Wednesday<br />
-        <input type="checkbox" name="chk_group[]" value="monday" />Thursday<br />
-        <input type="checkbox" name="chk_group[]" value="tuesday" />Friday<br />
+        <input type="checkbox" name="chk_group[]" value="0" onclick="onFilterChange()" />Monday<br />
+        <input type="checkbox" name="chk_group[]" value="1" onclick="onFilterChange()" />Tuesday<br />
+        <input type="checkbox" name="chk_group[]" value="2" onclick="onFilterChange()" />Wednesday<br />
+        <input type="checkbox" name="chk_group[]" value="3" onclick="onFilterChange()" />Thursday<br />
+        <input type="checkbox" name="chk_group[]" value="4" onclick="onFilterChange()" />Friday<br />
       </div>
     </div>
   </div>
@@ -106,19 +125,95 @@
 
 var colors = ["red", "blue", "green", "orange", "purple", "yellow", "DodgerBlue", "DarkCyan", "SteelBlue", "YellowGreen"];
 
+
+function onFilterChange()
+{
+  //the selected early start time
+  var e = document.getElementById("earliestClass");
+  var earliestClass = e.options[e.selectedIndex].value;
+
+  //the selected late end time
+  var e = document.getElementById("lastClass");
+  var lastClass = e.options[e.selectedIndex].value;
+
+  //the selected sorter
+  var e = document.getElementById("sortBy");
+  var sortBy = e.options[e.selectedIndex].value;
+
+  //all of the checked days
+  $("input[name='user_group[]']:checked")
+  var skipDayVals = new Array();
+  $.each($("input[name='chk_group[]']:checked"), function() {
+    skipDayVals.push($(this).val());
+  });
+  console.log(skipDayVals);
+
+  var mon = skipDayVals.indexOf("0") > -1;
+  var tues = skipDayVals.indexOf("1") > -1;
+  var wed = skipDayVals.indexOf("2") > -1;
+  var thurs = skipDayVals.indexOf("3") > -1;
+  var fri = skipDayVals.indexOf("4") > -1;
+
+  //@app.route('/filter/<earliestClass>/<latestEndTime>/<sortBy>/<mon>/<tues>/<wed>/<thurs>/<fri>')
+  var url='/filter/' + earliestClass + '/' + lastClass + '/' + sortBy + '/' + mon + '/' + tues + '/' + wed + '/' + thurs + '/' + fri;
+  $.getJSON(url, function(){});
+
+  refreshCals();
+  //alert("updatedFilters");
+}
+
+function greaterTime(first, second) {
+    //Assuming dates are the same year
+    if (first.clone().dayOfYear(0).isBefore(second.clone().dayOfYear(0)))
+        return second;
+    else
+        return first;
+}
+
 function refreshCals(){
 
-  $( "#calendarHolder").empty();
+  $( "#calendarHolder").fadeTo('slow',0).slideUp(function() {
+    $("#calendarHolder").empty();
 
-  var url = "/get_schedules";
+    var url = "/get_schedules";
   $.getJSON( url, function( jsonData ) 
   {
       var items = [];
       var i = 0;
+      var earlyStart = new Date();
+      var lateEnd = new Date();
+      earlyStart.setHours(23);
+      lateEnd.setHours(2);
       $.each( jsonData, function( key, obj ) {
 
         //create new calendar div
         $( "#calendarHolder").append( "<div id='calendar" + i + "' class='calendar'</div>" );
+
+        for( var j = 0; j < obj.length; j++ )
+        {
+          var tempDate = (moment(obj[j].start)).toDate();
+          console.log("Temp is at:" + tempDate);
+          tempDate.setDate(earlyStart.getDate());
+
+          console.log("Early is at:" + earlyStart);
+
+          if( earlyStart > tempDate )
+          {
+            earlyStart.setHours(tempDate.getHours());
+          }
+
+          var tempEnd = (moment(obj[j].end)).toDate();
+          tempEnd.setDate(lateEnd.getDate());
+
+          if( lateEnd < tempEnd )
+          {
+            lateEnd.setHours(tempEnd.getHours()+1);
+          }
+
+        }
+
+        var minTimeString = earlyStart.getHours() + ":00:00";
+        var maxTimeString = lateEnd.getHours() + ":00:00";
 
         //create calendar for this div
         var calendar = $('#calendar' + i).fullCalendar(
@@ -132,8 +227,8 @@ function refreshCals(){
           weekends:false,
           height: "auto",
           columnFormat: 'ddd',
-          minTime: "08:30:00",
-          maxTime: "18:30:00",
+          minTime: minTimeString,
+          maxTime: maxTimeString,
           events:obj
         });
 
@@ -143,6 +238,10 @@ function refreshCals(){
         i = i+1;
       });
   });
+  $( "#calendarHolder").fadeTo('fast',100).slideDown();
+  });
+
+  
 }
 
 function updateTable(){
@@ -194,8 +293,9 @@ $(document).ready(function(){
   var m = date.getMonth();
   var y = date.getFullYear();
 
-  refreshCals();
   updateTable();
+  onFilterChange();
+
   activePanel = $("#accordion div.panel:first");
   $(activePanel).addClass('active');
 
