@@ -116,7 +116,7 @@ def passes_filters(option):
 def get_scheds():
     # datetime equal to midnight on Monday of current week
     current_week = datetime.today()
-    current_week = current_week.replace(day=(current_week.day - current_week.weekday()),hour=0,minute=0)
+    current_week = current_week.replace(day=(current_week.day - current_week.weekday()),hour=0,minute=0,second=0,microsecond=0)
 
     # create list holding sections with meetings containing date_time objects
     to_backpack = []
