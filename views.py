@@ -70,6 +70,7 @@ def clear_backpack():
 
 
 API_DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+colors = ["red", "blue", "green", "orange", "purple", "yellow", "DodgerBlue", "DarkCyan", "SteelBlue", "YellowGreen"];
 
 @app.route('/get_schedules')
 def get_scheds():
@@ -100,6 +101,8 @@ def get_scheds():
         to_backpack.append( sections )
 
     ret = []
+    
+    modder = 0
 
     options = list(itertools.product(*to_backpack))
     for i in options[0:5]:
@@ -112,9 +115,11 @@ def get_scheds():
                     'allDay': False,
                     'start': meeting[0].isoformat(),
                     'end': meeting[1].isoformat(),
-                    'backgroundColor': '#000000',
+                    'backgroundColor': colors[modder],
                 })
+            modder = modder + 1    
         ret.append(option)
+        modder = 0
 
 
     # options = []
