@@ -180,11 +180,13 @@ function refreshCals(){
   {
       var items = [];
       var i = 0;
-      var earlyStart = new Date();
-      var lateEnd = new Date();
-      earlyStart.setHours(23);
-      lateEnd.setHours(2);
+      
       $.each( jsonData, function( key, obj ) {
+
+        var earlyStart = new Date();
+        var lateEnd = new Date();
+        earlyStart.setHours(23);
+        lateEnd.setHours(2);
 
         if( obj.length > 0 )
         {
