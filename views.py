@@ -102,8 +102,7 @@ def get_scheds():
 
     # create list containing valid course pairing options
     ret = []
-    options = list(itertools.product(*to_backpack))
-    for i in options[0:NUM_RET]:
+    for i in itertools.product(*to_backpack):
         option = []
         for modder, course in enumerate(i):
             for meeting in course['meetings']:
@@ -116,6 +115,8 @@ def get_scheds():
                     'backgroundColor': colors[modder % NUM_RET],
                 })
         ret.append(option)
+        if len(ret) == NUM_RET:
+            break
 
     return json.dumps(ret,indent=4, separators=(',', ': '))
 
