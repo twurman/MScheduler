@@ -189,10 +189,10 @@ function refreshCals(){
       {
         $( "#calendarHolder").append( "<div class='calendar' style='text-align:center;margin-left:27%;margin-right:30%;'> No Calendars could be created. Please Try Different Combinations </div>" );
       }
+      $("#calendarHolder").empty();
       
       $.each( jsonData, function( key, obj ) {
 
-        $("#calendarHolder").empty();
 
         var earlyStart = new Date();
         var lateEnd = new Date();
