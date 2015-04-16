@@ -252,7 +252,7 @@ function updateTable(){
   $.getJSON( url, function( jsonData ) 
   {
       var html = "<table class='table table-striped' style='background-color:white; width:100%; margin:0px'>" 
-      + "<thead> <th width='80%'>Course</th> <th width='10%'>Edit</th> <th width='10%'>Delete</th> </thead> <tbody>";
+      + "<thead> <th width='80%'>Course</th> <th width='10%'>Edit</th> <th width='10%'>Remove</th> </thead> <tbody>";
       var items = [];
       var i = 0;
       $.each( jsonData, function( key, obj ) {
@@ -264,7 +264,7 @@ function updateTable(){
         // }
         var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
         console.log(deleteURL);
-        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { } ); refreshCals(); updateTable();";
+        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { } ); alert('Class Removed'); refreshCals(); updateTable();";
         console.log(deleteFunc);
 
         //create new row in table
@@ -272,7 +272,7 @@ function updateTable(){
           + "<td><button type='button' class='btn btn-warning'>Edit</button></td>"
           + "<td><button type='button' class='btn btn-danger' "
           + "onclick=\"" + deleteFunc + "\""
-          + ">Delete</button></td>"
+          + ">Remove</button></td>"
           + "</tr>";
 
 
