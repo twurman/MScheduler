@@ -75,11 +75,11 @@ NUM_RET = 6
 
 @app.route('/get_schedules')
 def get_scheds():
+    # datetime equal to midnight on Monday of current week
     current_week = datetime.today()
     current_week = current_week.replace(day=(current_week.day - current_week.weekday()),hour=0,minute=0)
 
-    options = []
-
+    # create list holding sections with meetings containing date_time objects
     to_backpack = []
     for c in session['backpack']:
         sections = [ dict(s.items()+c.items()) for s in get_sections(**c) ]
@@ -98,11 +98,10 @@ def get_scheds():
 
                     meetings.append((start,end))
             section['meetings'] = meetings
-
         to_backpack.append( sections )
 
+    # create list containing valid course pairing options
     ret = []
-
     options = list(itertools.product(*to_backpack))
     for i in options[0:NUM_RET]:
         option = []
