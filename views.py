@@ -85,9 +85,20 @@ def passes_filters(option):
         if len(set([section['SectionType'] for section in course])) != len(course):
             return False
 
-    meetings = sum([ section['meetings'] for section in course for course in option ], [])
+    meetings = []
+    for course in option:
+        for section in course:
+            for meeting in section['meetings']:
+                meetings.append(meeting)
+
+    for meeting in meetings:
+        if meeting[0].weekday() in session['filters']['no_class_days']:
+            return False
+
     for pair in itertools.combinations(meetings, 2):
-        if (pair[0][0] < pair[1][0] < pair[0][1]) or (pair[1][0] < pair[0][0] < pair[1][1]):
+        if pair[0][0] == pair[1][1] or pair[0][1] == pair[1][0]:
+            pass
+        elif (pair[0][0] <= pair[1][0] <= pair[0][1]) or (pair[1][0] <= pair[0][0] <= pair[1][1]):
             return False
 
     return True
