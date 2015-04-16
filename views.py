@@ -68,6 +68,12 @@ def clear_backpack():
     del session['backpack']
     return ''
 
+def default(obj):
+    """Default JSON serializer."""
+
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    return obj
 
 API_DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 colors = ["#43735D", "#B8CA0C", "#1D3833", "#626589", "#ddaa44"];
@@ -83,9 +89,11 @@ def get_scheds():
     to_backpack = []
     for c in session['backpack']:
         sections = [ dict(s.items()+c.items()) for s in get_sections(**c) ]
+        section_types = set()
         for section in sections:
             if 'Meeting' not in section:
                 continue
+            section_types.add(section['SectionType'])
             if not isinstance(section['Meeting'], list):
                 section['Meeting'] = [section['Meeting']]
             meetings = []
@@ -98,27 +106,46 @@ def get_scheds():
 
                     meetings.append((start,end))
             section['meetings'] = meetings
-        to_backpack.append( sections )
+        to_backpack.append( list(itertools.combinations(sections, len(section_types))) )
 
     # create list containing valid course pairing options
     ret = []
     for i in itertools.product(*to_backpack):
+        #return
+        passes=True
+
+        # check to make sure section types are unique
+        for course in i:
+            if len(set([section['SectionType'] for section in course])) != len(course):
+                passes=False
+
+        meetings = sum([ section['meetings'] for section in course for course in i ], [])
+        for pair in itertools.combinations(meetings, 2):
+            if (pair[0][0] < pair[1][0] < pair[0][1]) or (pair[1][0] < pair[0][0] < pair[1][1]):
+                #print 'overlaps!:', pair
+                #print json.dumps(i,indent=4, separators=(',', ': '),sort_keys=True,default=default)
+                passes = False
+
+        if not passes:
+            continue
+
         option = []
-        for modder, course in enumerate(i):
-            for meeting in course['meetings']:
-                option.append({
-                    'id': 0,
-                    'title': ' '.join((course['subject'],course['course_num'])),
-                    'allDay': False,
-                    'start': meeting[0].isoformat(),
-                    'end': meeting[1].isoformat(),
-                    'backgroundColor': colors[modder % NUM_RET],
-                })
+        for modder,course in enumerate(i):
+            for section in course:
+                for meeting in section['meetings']:
+                    option.append({
+                        'id': 0,
+                        'title': ' '.join((section['subject'],section['course_num'],section['SectionNumber'])),
+                        'allDay': False,
+                        'start': meeting[0].isoformat(),
+                        'end': meeting[1].isoformat(),
+                        'backgroundColor': colors[modder % NUM_RET],
+                    })
         ret.append(option)
         if len(ret) == NUM_RET:
             break
 
-    return json.dumps(ret,indent=4, separators=(',', ': '))
+    return json.dumps(ret,indent=4, separators=(',', ': '),sort_keys=True)
 
 @app.route('/filter/<earliestClass>/<latestEndTime>/<sortBy>/<mon>/<tues>/<wed>/<thurs>/<fri>')
 def send_filters(earliestClass, latestEndTime, sortBy, mon, tues, wed, thurs, fri):
