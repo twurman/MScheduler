@@ -264,7 +264,7 @@ function updateTable(){
         // }
         var deleteURL = "\/backpack_course\/delete\/" + obj.subject + "\/" + obj.course_num;
         console.log(deleteURL);
-        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { refreshCals(); updateTable(); } );";
+        var deleteFunc = "$.getJSON(\'" + deleteURL + "\' , function( jsonData ) { } ); refreshCals(); updateTable();";
         console.log(deleteFunc);
 
         //create new row in table
