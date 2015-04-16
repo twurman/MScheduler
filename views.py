@@ -79,6 +79,19 @@ API_DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 colors = ["#43735D", "#B8CA0C", "#1D3833", "#626589", "#ddaa44"];
 NUM_RET = 6
 
+def passes_filters(option):
+    # check to make sure section types are unique
+    for course in option:
+        if len(set([section['SectionType'] for section in course])) != len(course):
+            return False
+
+    meetings = sum([ section['meetings'] for section in course for course in option ], [])
+    for pair in itertools.combinations(meetings, 2):
+        if (pair[0][0] < pair[1][0] < pair[0][1]) or (pair[1][0] < pair[0][0] < pair[1][1]):
+            return False
+
+    return True
+
 @app.route('/get_schedules')
 def get_scheds():
     # datetime equal to midnight on Monday of current week
@@ -111,22 +124,8 @@ def get_scheds():
     # create list containing valid course pairing options
     ret = []
     for i in itertools.product(*to_backpack):
-        #return
-        passes=True
 
-        # check to make sure section types are unique
-        for course in i:
-            if len(set([section['SectionType'] for section in course])) != len(course):
-                passes=False
-
-        meetings = sum([ section['meetings'] for section in course for course in i ], [])
-        for pair in itertools.combinations(meetings, 2):
-            if (pair[0][0] < pair[1][0] < pair[0][1]) or (pair[1][0] < pair[0][0] < pair[1][1]):
-                #print 'overlaps!:', pair
-                #print json.dumps(i,indent=4, separators=(',', ': '),sort_keys=True,default=default)
-                passes = False
-
-        if not passes:
+        if not passes_filters(i):
             continue
 
         option = []
