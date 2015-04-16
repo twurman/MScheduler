@@ -450,12 +450,16 @@ $(document).ready(function(){
 
               
               $('#addClass').bind('click', function(){
-                 $.get(url, function(){ 
-                  // alert('Class Added');
-                 updateTable();
-                 refreshCals();
-                 });
-                 
+                $.ajax({
+                  type:"GET",
+                  url: url,
+                  success: function(){
+                    updateTable();
+                    refreshCals();
+                  },
+                  error: function(alertData) {alert(alertData)}
+                });
+
               });
           });
                     
