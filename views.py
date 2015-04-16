@@ -124,7 +124,6 @@ def get_scheds():
     # create list containing valid course pairing options
     ret = []
     for i in itertools.product(*to_backpack):
-
         if not passes_filters(i):
             continue
 
@@ -157,12 +156,7 @@ def send_filters(earliestClass, latestEndTime, sortBy, mon, tues, wed, thurs, fr
     filter_item['earliestClass'] = earliestClass
     filter_item['latestEndTime'] = latestEndTime
     filter_item['sortBy'] = sortBy
-    filter_item['monClass'] = mon
-    filter_item['tuesClass'] = tues
-    filter_item['wedClass'] = wed
-    filter_item['thursClass'] = thurs
-    filter_item['friClass'] = fri
-
+    filter_item['no_class_days'] = [i for i,d in enumerate((mon,tues,wed,thurs,fri)) if d != 'false']
 
     session['filters'] = filter_item
     print session['backpack']
