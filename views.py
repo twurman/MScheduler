@@ -144,7 +144,8 @@ def get_scheds():
                 for meeting in section['meetings']:
                     option.append({
                         'id': 0,
-                        'title': ' '.join((section['subject'],section['course_num'],section['SectionNumber'])),
+                        'title': '{} {} - {}'.format(section['subject'],section['course_num'],section['SectionNumber']),
+                        'description': '{} @ {}'.format(section['SectionType'], 'MH 370'),
                         'allDay': False,
                         'start': meeting[0].isoformat(),
                         'end': meeting[1].isoformat(),
