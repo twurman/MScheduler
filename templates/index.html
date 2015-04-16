@@ -174,14 +174,25 @@ function refreshCals(){
 
   $( "#calendarHolder").fadeTo('slow',0).slideUp('slow',function() {
     $("#calendarHolder").empty();
+    $( "#calendarHolder").append( "<div class='calendar' style='text-align:center;margin-left:27%;margin-right:30%;'> Generating... </div>" );
 
     var url = "/get_schedules";
+
+
+
   $.getJSON( url, function( jsonData ) 
   {
       var items = [];
       var i = 0;
+
+      if( jsonData.length == 0 )
+      {
+        $( "#calendarHolder").append( "<div class='calendar' style='text-align:center;margin-left:27%;margin-right:30%;'> No Calendars could be created. Please Try Different Combinations </div>" );
+      }
       
       $.each( jsonData, function( key, obj ) {
+
+        $("#calendarHolder").empty();
 
         var earlyStart = new Date();
         var lateEnd = new Date();
@@ -247,7 +258,7 @@ function refreshCals(){
         {
           $( "#calendarHolder").append( "<div class='calendar' style='text-align:center;margin-left:27%;margin-right:30%;'> No Calendars could be created. Please Try Different Combinations </div>" );
         }
-      });
+      });//end getjson
   });
   $( "#calendarHolder").fadeTo('fast',100).slideDown();
   });
