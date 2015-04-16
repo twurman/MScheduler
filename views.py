@@ -70,7 +70,8 @@ def clear_backpack():
 
 
 API_DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
-colors = ["#43735D", "#B8CA0C", "#1D3833", "#d43f3a", "#f0ad4e"];
+colors = ["#43735D", "#B8CA0C", "#1D3833", "#282a39", "#d43f3a"];
+#light green, lime green, dark green, navy, red
 
 @app.route('/get_schedules')
 def get_scheds():
