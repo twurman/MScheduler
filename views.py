@@ -86,7 +86,7 @@ def default(obj):
 
 API_DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 colors = ["#43735D", "#B8CA0C", "#1D3833", "#626589", "#ddaa44"];
-NUM_RET = 6
+NUM_RET = 5
 
 def passes_filters(option):
     # check to make sure section types are unique
