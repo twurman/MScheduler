@@ -137,7 +137,7 @@ def get_scheds():
                     start = current_week + timedelta(days=API_DAYS.index(day), hours=times[0].tm_hour, minutes=times[0].tm_min)
                     end   = current_week + timedelta(days=API_DAYS.index(day), hours=times[1].tm_hour, minutes=times[1].tm_min)
 
-                    meetings.append((start,end))
+                    meetings.append((start,end,meeting['Location']))
             section['meetings'] = meetings
         to_backpack.append( list(itertools.combinations(sections, len(section_types))) )
 
@@ -154,7 +154,7 @@ def get_scheds():
                     option.append({
                         'id': 0,
                         'title': '{} {} - {}'.format(section['subject'],section['course_num'],section['SectionNumber']),
-                        'description': '{} @ {}'.format(section['SectionType'], 'MH 370'),
+                        'description': '{} @ {}'.format(section['SectionType'], meeting[2]),
                         'allDay': False,
                         'start': meeting[0].isoformat(),
                         'end': meeting[1].isoformat(),

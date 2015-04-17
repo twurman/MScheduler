@@ -67,13 +67,18 @@ def get_course_description(term, school, subject, catalog_num):
 
 def get_sections(term, school, subject, course_num):
 
-    return get_data('/get_sections?term_code=' + term + '&school=' + school
-                        + '&subject=' + subject + '&catalog_num=' + course_num)
+    sections = get_data('/get_sections?term_code=' + str(term) + '&school=' + str(school)
+                        + '&subject=' + str(subject) + '&catalog_num=' + str(course_num))
+    for section in sections:
+        details = get_section_details(term,school,subject,course_num,section['SectionNumber'])
+        section['Meeting'] = details['Meeting']
+    return sections
+
 
 def get_section_details(term, school, subject, catalog_num, section_num):
 
-    return get_data('/get_sections?term_code=' + term + '&school=' + school + '&subject=' + subject
-                        + '&catalog_num=' + catalog_num + '&section_num=' + section_num)
+    return get_data('/get_section_details?term_code=' + str(term) + '&school=' + str(school) + '&subject=' + str(subject)
+                        + '&catalog_num=' + str(catalog_num) + '&section_num=' + str(section_num))
 
 def get_meetings(term, school, subject, catalog_num, section_num):
 
