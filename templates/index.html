@@ -246,7 +246,11 @@ function refreshCals(){
             columnFormat: 'ddd',
             minTime: minTimeString,
             maxTime: maxTimeString,
-            events:obj
+            events:obj,
+            eventRender: function(event, element) { 
+              element.find('.fc-title').append("<br/><small><i>" + event.description+ "</i></small>"); 
+
+            } 
           });
 
           // console.log(obj);
