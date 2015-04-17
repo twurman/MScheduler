@@ -86,7 +86,7 @@ def default(obj):
 
 API_DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 colors = ["#43735D", "#B8CA0C", "#1D3833", "#626589", "#ddaa44"];
-NUM_RET = 5
+NUM_RET = 6
 
 def passes_filters(option):
     # check to make sure section types are unique
@@ -162,7 +162,7 @@ def get_scheds():
                         'allDay': False,
                         'start': meeting[0].isoformat(),
                         'end': meeting[1].isoformat(),
-                        'backgroundColor': colors[modder % NUM_RET],
+                        'backgroundColor': colors[modder % 5],
                     })
         ret.append(option)
         if len(ret) == NUM_RET:
