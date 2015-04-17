@@ -103,6 +103,10 @@ def passes_filters(option):
     for meeting in meetings:
         if meeting[0].weekday() in session['filters']['no_class_days']:
             return False
+        if meeting[0].hour < int(session['filters']['earliestClass']):
+            return False
+        if meeting[1].hour > int(session['filters']['latestEndTime']):
+            return False
 
     for pair in itertools.combinations(meetings, 2):
         if pair[0][0] == pair[1][1] or pair[0][1] == pair[1][0]:
